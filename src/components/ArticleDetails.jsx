@@ -15,7 +15,6 @@ const ArticleDetails = ({ apiKey }) => {
                 const data = await response.json();
 
                 if (data.articles && data.articles.length > 0) {
-                    // Assuming the first result is the article you want
                     setArticle(data.articles[0]);
                 }
             } catch (error) {

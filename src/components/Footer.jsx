@@ -1,29 +1,30 @@
 import React from 'react';
-import logo from './logo.png'
+import logo from './logo.png';
+
 const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-logo">
-          <img src={logo} alt="Logo" />
+          <img src={logo} alt="Company Logo" />
         </div>
         <div className="footer-links">
           <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="https://www.facebook.com/">Home</a></li>
+            <li><a href="https://www.facebook.com/">About</a></li>
+            <li><a href="https://www.facebook.com/">Services</a></li>
+            <li><a href="https://www.facebook.com/">Contact</a></li>
           </ul>
         </div>
         <div className="footer-social">
           <span>Follow us:</span>
-          <a href="#" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
             <i className="fab fa-facebook"></i>
           </a>
-          <a href="#" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer">
             <i className="fab fa-twitter"></i>
           </a>
-          <a href="#" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
             <i className="fab fa-instagram"></i>
           </a>
         </div>

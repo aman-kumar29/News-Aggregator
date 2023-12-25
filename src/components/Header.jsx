@@ -7,12 +7,7 @@ import SearchOverlay from './SearchOverlay';
 const Header = ({ onSearch }) => {
   const [keywords, setKeywords] = useState('');
   const [overlayVisible, setOverlayVisible] = useState(false);
-
-  const handleSearch = () => {
-    onSearch(keywords);
-    setKeywords('');
-  };
-
+  
   const handleCategory = (category) => {
     onSearch(category);
     setKeywords('');

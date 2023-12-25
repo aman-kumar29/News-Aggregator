@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const NewsCard = ({ article }) => {
-  const { title, url, urlToImage, publishedAt, source } = article;
+  const { title, urlToImage, publishedAt, source } = article;
 
   return (
     <Link to={`/article/${encodeURIComponent(title)}`} className="card news-card">
