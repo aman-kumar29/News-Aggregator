@@ -5,9 +5,8 @@ import search_icon from './search-icon-image.png';
 import SearchOverlay from './SearchOverlay';
 
 const Header = ({ onSearch }) => {
-  const [keywords, setKeywords] = useState('');
   const [overlayVisible, setOverlayVisible] = useState(false);
-  
+
   const handleCategory = (category) => {
     onSearch(category);
     setKeywords('');
