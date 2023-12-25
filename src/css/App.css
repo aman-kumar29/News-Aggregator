@@ -1,0 +1,396 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz@9..40&family=Montserrat&display=swap');
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  color: #265073;
+  background-color: #f4f8fb;
+  margin:0;
+  padding: 0;
+}
+h1{
+  padding-bottom: 30px;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+/* header Section */
+.navbar {
+  background-color: #f4f8fb; /* Change the background color as needed */
+  color: #265073; /* Text color */
+  padding: 60px 20px; /* Adjust padding as needed */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-image {
+  width: 20%; /* Adjust logo width as needed */
+  height: auto;
+}
+
+.nav-container {
+  display: flex;
+}
+
+.nav-menu {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-menu li {
+  margin-right: 20px;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #265073;
+  font-weight: bold;
+  font-size: 16px; /* Adjust font size as needed */
+  transition: color 0.3s ease;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  padding-right: 200px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  margin-right: 10px;
+  font-size: 16px;
+  border: none; /* Remove input border if needed */
+}
+
+button.search-btn {
+  size: inherit;
+  padding: 10px;
+  background-color: #f4f8fb;
+  border: none;
+  cursor: pointer;
+}
+
+.search-icon-image {
+  width: 20px; /* Adjust icon width as needed */
+  height: auto;
+}
+
+.subscribe-div {
+  margin-left: auto;
+}
+
+.subscribe-btn {
+  padding: 10px 20px;
+  background-color: #ff5722; /* Subscribe button color, you can change it */
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.subscribe-btn:hover {
+  background-color: #e64a19; /* Darker shade on hover, you can change it */
+}
+.no-design-button {
+  text-decoration: none;
+  background-color: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit; 
+}
+.no-design-button:hover {
+  color: #bbff00;
+}
+
+/* Overlay Search */
+.overlay {
+  position:fixed;
+  top: 1%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.95); /* White background */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+  padding: 1%;
+  box-sizing: border-box;
+  animation: fadeInOut 0.5s ease-in-out;
+}
+
+.overlay-content {
+  width: 100%; /* Adjust the width as needed */
+  max-width: 600px; /* Set a maximum width for better responsiveness */
+}
+.overlay input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+.overlay-btns {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  /* margin-top: 20px; */
+}
+
+.close-btn {
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #333; /* Dark color for the close icon */
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: #f00; /* Change color on hover */
+}
+@keyframes fadeInOut {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* News Card Styling */
+.news-container {
+  margin: 20px;
+  padding: 1% 13%;
+}
+
+.news-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2%;
+  padding: 0 20px; /* Add padding to both left and right sides */
+}
+
+.news-card {
+  flex-basis: calc(30% - 20px); /* Set a flexible basis with a gap between cards */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  height: 400px; /* Set a fixed height for all cards */
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px; /* Add margin between cards */
+}
+
+.news-card:hover {
+  border-color: #007bff; /* Change border color on hover */
+}
+
+.news-image {
+  width: 100%;
+  height: 200px; /* Set a fixed height for the image */
+  object-fit: cover;
+}
+
+.news-details {
+  padding: 20px;
+  flex-grow: 1;
+}
+
+.news-details h3 {
+  margin-bottom: 10px;
+  max-height: 100px; /* Limit the height of the title to two lines */
+  overflow: hidden;
+}
+
+.news-details p {
+  margin-bottom: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.news-details .source,
+.news-details .published-date {
+  font-size: 14px;
+  color: #777;
+}
+
+.news-details a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  display: block;
+}
+
+.news-details a:hover {
+  text-decoration: underline;
+  color: #0056b3; /* Change link color on hover */
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1200px) {
+  .news-card {
+    flex-basis: calc(33.33% - 20px);
+  }
+}
+
+@media (max-width: 992px) {
+  .news-card {
+    flex-basis: calc(50% - 20px);
+  }
+}
+
+@media (max-width: 768px) {
+  .news-card {
+    flex-basis: calc(100% - 20px);
+  }
+}
+
+
+/* Footer Styling  */
+
+/* Add these styles to your CSS file */
+
+.footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-logo img {
+  width: 50px; /* Adjust the logo size */
+  height: auto;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.footer-social {
+  display: flex;
+  align-items: center;
+}
+
+.footer-social span {
+  margin-right: 10px;
+}
+
+.footer-social a {
+  color: #fff;
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+}
+
+
+/* ArticleDetails.css */
+.article-details-container {
+  padding: 20px;
+}
+
+.article-details {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.article-title {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.published-date {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.article-image {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.article-content {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  text-align: justify;
+}
+
+.article-additional {
+  font-size: 14px;
+  color: #777;
+  white-space: pre-wrap;
+}
