@@ -2,8 +2,8 @@
 
 body {
   font-family: 'DM Sans', sans-serif;
-  color: #265073;
-  background-color: #f4f8fb;
+  color: #007BFF;
+  background-color: #f0f0f0;
   margin:0;
   padding: 0;
 }
@@ -149,58 +149,81 @@ button.search-btn {
   color: #bbff00;
 }
 
+
 /* Overlay Search */
 .overlay {
-  position:fixed;
-  top: 1%;
-  width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.95); /* White background */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-end;
-  padding: 1%;
-  box-sizing: border-box;
-  animation: fadeInOut 0.5s ease-in-out;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.95);
+  transition: 0.5s;
+  overflow-x: hidden;
 }
 
 .overlay-content {
-  width: 100%; /* Adjust the width as needed */
-  max-width: 600px; /* Set a maximum width for better responsiveness */
-}
-.overlay input {
+  position: relative;
+  top: 10%;
   width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  box-sizing: border-box;
-}
-.overlay-btns {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  /* margin-top: 20px; */
+  text-align: center;
+  margin-top: 30px;
 }
 
-.close-btn {
+/* Style the open button */
+.open-button {
+  margin-top: 30px;
+  padding: 10px 30px;
+  background: #2196f3;
+  color: #fff;
   cursor: pointer;
-  background: none;
   border: none;
-  font-size: 24px;
-  color: #333; /* Dark color for the close icon */
-  transition: color 0.3s ease;
+  border-radius: 10px;
 }
 
-.close-btn:hover {
-  color: #f00; /* Change color on hover */
+.open-button:hover {
+  background: #0b7dda;
 }
-@keyframes fadeInOut {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+
+/* Style the "Close" button */
+.close-button {
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 60px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: black;
+}
+
+/* Style search elements */
+.search-input {
+  width: 30%;
+  padding: 12px 15px;
+  border:#777;
+  outline: auto;
+  border-radius: 30px 0px 0px 30px;
+}
+
+.search-button {
+  padding: 12px 15px;
+  border: #777;
+  cursor: pointer;
+  background: #007BFF;
+  color: white;
+  border-radius: 0px 30px 30px 0px;
+  transition: 0.3s;
+}
+
+.search-button:hover {
+  background: #004c9c;
+  color:white
+}
+
+.search-text {
+  color: rgba(0, 0, 0, 0.7);
 }
 
 /* News Card Styling */
