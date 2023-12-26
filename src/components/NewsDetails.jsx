@@ -8,18 +8,17 @@ const NewsDetails = ({ apiKey, keywords }) => {
   const [nextPageCode, setNextPageCode] = useState(null);
 
 
-  useEffect(() => {
-    const fetchNews = async () => {
-      try {
-        let apiUrl;
-        if (keywords) {
-          apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=${keywords}`;
-        } else {
-          apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=india&language=en`;
-        }
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        setNextPageCode(data.nextPage);
+    useEffect(() => {
+        const fetchNews = async () => {
+            try {
+                let apiUrl;
+                if (keywords) {
+                    apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=${keywords}`;
+                } else {
+                    apiUrl = `https://newsdata.io/api/1/news?apikey=pub_3538878cb1f81c12426d02f635118ab11f95a&q=pizza`;
+                }
+                const response = await fetch(apiUrl);
+                const data = await response.json();
 
         if (data.status === 'success' && data.results && data.results.length > 0) {
           const sortedNews = data.results.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));

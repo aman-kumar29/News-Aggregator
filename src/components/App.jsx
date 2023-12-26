@@ -31,8 +31,7 @@ function App() {
         {/* onCategorySearch = {handleCategorySearch} */}
         <Switch>
           <Route exact path="/">
-            <NewsDetails apiKey="pub_3543105ef3e9bc681414994eba72a28960936" keywords={searchKeywords}/>
-            {/* {(searchCategory) ? <NewsDetailsCategory apiKey="pub_3543105ef3e9bc681414994eba72a28960936" category={searchCategory} /> :  */}
+            <NewsDetails apiKey="pub_3538878cb1f81c12426d02f635118ab11f95a" keywords={searchKeywords} />
           </Route>
           <Route path="/article/:id" component={() => <ArticleDetails apiKey="pub_3543105ef3e9bc681414994eba72a28960936" />} />
           <Route path="*" component={NotFound} />
