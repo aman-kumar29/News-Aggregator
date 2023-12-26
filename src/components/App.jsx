@@ -25,9 +25,9 @@ function App() {
         <Header onSearch={handleSearch} />
         <Switch>
           <Route exact path="/">
-            <NewsDetails apiKey="pub_3538878cb1f81c12426d02f635118ab11f95a" keywords={searchKeywords} />
+            <NewsDetails apiKey="pub_3538805e43cd5949e2ee6e53c92ac9657dd21" keywords={searchKeywords} />
           </Route>
-          <Route path="/article/:id" component={() => <ArticleDetails apiKey="pub_3538878cb1f81c12426d02f635118ab11f95a" />} />
+          <Route path="/article/:id" component={() => <ArticleDetails apiKey="pub_3538805e43cd5949e2ee6e53c92ac9657dd21" />} />
           <Route path="*" component={NotFound} />
         </Switch>
         <Footer />
