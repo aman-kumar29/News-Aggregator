@@ -14,7 +14,7 @@ const NewsDetails = ({ apiKey, keywords }) => {
                 if (keywords) {
                     apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=${keywords}`;
                 } else {
-                    apiUrl = `https://newsdata.io/api/1/news?apikey=pub_3538878cb1f81c12426d02f635118ab11f95a&q=pizza`;
+                    apiUrl = `https://newsdata.io/api/1/news?apikey=pub_3543105ef3e9bc681414994eba72a28960936&q=india&language=en`;
                 }
                 const response = await fetch(apiUrl);
                 const data = await response.json();
