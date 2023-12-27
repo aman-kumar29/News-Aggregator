@@ -46,8 +46,8 @@ const Footer = () => {
           </IconButton>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="body2" color="text.secondary" align="center">
-            © {new Date().getFullYear()} NewZera
+          <Typography variant="body1" color="text.secondary" align="center">
+             Made By Aman❤️️
           </Typography>
         </Grid>
       </Grid>
