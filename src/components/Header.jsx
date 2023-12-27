@@ -1,105 +1,3 @@
-// import React, { useState } from 'react';
-// import { Grid, IconButton, Typography, Button, Stack } from '@mui/material';
-// import FitbitIcon from '@mui/icons-material/Fitbit';
-// import SearchIcon from '@mui/icons-material/Search';
-// import { useRef } from 'react';
-
-// const Header = ({ onSearch }) => {
-//   const [searchText, setSearchText] = useState('');
-//   const [isSearchFocused, setIsSearchFocused] = useState(false); // Track whether the search input is focused
-
-//   const handleSearch = () => {
-//     onSearch(searchText);
-//     closeSearch();
-//   };
-
-//   const overlayRef = useRef();
-
-//   const openSearch = () => {
-//     overlayRef.current.style.width = '100%';
-//     setIsSearchFocused(true); // Set the flag to true when opening the search
-//   };
-
-//   const closeSearch = () => {
-//     overlayRef.current.style.width = '0%';
-//     setIsSearchFocused(false); // Reset the flag when closing the search
-//   };
-
-//   const handleCategory = (category) => {
-//     onSearch(category);
-//   };
-
-//   return (
-//     <>
-//       <Grid container alignItems="center">
-//         <Grid item>
-//           <IconButton size="large" edge="start" aria-label="logo">
-//             <FitbitIcon />
-//           </IconButton>
-//         </Grid>
-//         <Grid item>
-//           <Typography variant="h6" component="div">
-//             NewZera
-//           </Typography>
-//         </Grid>
-//         <Grid item xs={8} md={6}>
-//           <Stack direction="row" spacing={2}>
-//             <Button color="inherit" onClick={() => handleCategory('top')}>
-//               Top News
-//             </Button>
-//             <Button color="inherit" onClick={() => handleCategory('sports')}>
-//               Sports News
-//             </Button>
-//             <Button color="inherit" onClick={() => handleCategory('entertainment')}>
-//               Entertainment News
-//             </Button>
-//           </Stack>
-//         </Grid>
-//         <Grid item xs={false} md={4} />
-
-//         <Grid item>
-//           <IconButton size="large" edge="end" aria-label="search-icon-img" onClick={openSearch}>
-//             <SearchIcon />
-//           </IconButton>
-//         </Grid>
-//         <Grid item>
-//           <Button variant="contained" color="primary">
-//             Subscribe
-//           </Button>
-//         </Grid>
-//       </Grid>
-
-//       <div ref={overlayRef} className="overlay">
-//         <button className="close-button" onClick={closeSearch}>
-//           &times;
-//         </button>
-//         <div className="overlay-content">
-//           <form>
-//             <input
-//               className="search-input"
-//               type="text"
-//               placeholder="Enter your search keyword..."
-//               value={searchText}
-//               onChange={(e) => setSearchText(e.target.value)}
-//               onKeyDown={(e) => {
-//                 if (e.key === 'Enter') {
-//                   handleSearch();
-//                 }
-//               }}
-//               onFocus={() => setIsSearchFocused(true)}
-//               onBlur={() => setIsSearchFocused(false)}
-//             />
-//             <button className="search-button" onClick={handleSearch}>
-//               Search
-//             </button>
-//           </form>
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default Header;
 import React, { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -113,6 +11,8 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import TextField from '@mui/material/TextField';
+
 import { useRef } from 'react';
 
 import FitbitIcon from '@mui/icons-material/Fitbit';
@@ -123,32 +23,34 @@ function Header({ onSearch }) {
   const [searchText, setSearchText] = useState('');
   // const [isSearchFocused, setIsSearchFocused] = useState(false);
 
-  const handleSearch = () => {
-    onSearch(searchText);
-    closeSearch();
-  };
-
+  
   const overlayRef = useRef();
-
+  
   const openSearch = () => {
     overlayRef.current.style.width = '100%';
   };
-
+  
   const closeSearch = () => {
     overlayRef.current.style.width = '0%';
   };
-
+  
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-
+  
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
+  
   const handleCategory = (category) => {
+    console.log(category);
     onSearch(category);
-    handleCloseNavMenu(); // Close the menu after selecting a category
+    handleCloseNavMenu();
+    closeSearch();
+  };
+  const handleSearch = () => {
+    onSearch(searchText);
+    closeSearch();
   };
 
   return (
@@ -274,6 +176,7 @@ function Header({ onSearch }) {
                   <SearchIcon sx={{ fontSize: '1.8rem', color: '#ffffff' }} />
                 </IconButton>
               </Tooltip>
+
             </Box>
           </Toolbar>
         </Container>
@@ -284,36 +187,36 @@ function Header({ onSearch }) {
         </button>
         <div className="overlay-content">
           <form>
-            <input
-              className="search-input"
-              type="text"
-              placeholder="Enter your search keyword..."
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  handleSearch();
-                }
-              }}
-              // onFocus={() => setIsSearchFocused(true)}
-              // onBlur={() => setIsSearchFocused(false)}
-              // style={{ fontSize: '1rem', padding: '8px', borderRadius: '4px', border: '1px solid #ccc', width: '100%' }}
-            />
-            <button
-              className="search-button"
-              onClick={handleSearch}
-              // style={{
-              //   fontSize: '1rem',
-              //   padding: '8px',
-              //   borderRadius: '4px',
-              //   border: 'none',
-              //   backgroundColor: '#007BFF',
-              //   color: '#ffffff',
-              //   cursor: 'pointer',
-              // }}
-            >
-              Search
-            </button>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <TextField
+                sx={{ width: '30%',marginLeft:'35%', marginRight: '1%', borderRadius: '30px 0px 0px 30px' }}
+                type="text"
+                placeholder="Enter your search keyword..."
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleSearch();
+                  }
+                }}
+              />
+              <Button
+                onClick={handleSearch}
+                sx={{
+                  padding: '12px 15px',
+                  borderRadius: '0px 30px 30px 0px',
+                  transition: '0.3s',
+                  background: '#007BFF',
+                  color: 'white',
+                  '&:hover': {
+                    backgroundColor: '#0056b3',
+                  },
+                }}
+                variant="contained"
+              >
+                Search
+              </Button>
+            </Box>
           </form>
         </div>
       </div>
