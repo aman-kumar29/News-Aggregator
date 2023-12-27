@@ -16,17 +16,17 @@ const ArticleDetails = () => {
   const { article } = location.state || {};
 
   return (
-    <Container maxWidth="md" sx={{ mt: 4, bgcolor: '#fff', padding: '20px' }}>
+    <Container maxWidth="md" sx={{ mt: 4, bgcolor: '#F7F7F7', padding: '20px' }}>
       {article ? (
         <Card sx={{
           borderRadius: 10,
           boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.15) 0px 0px 0px rgba(0, 0, 0, 0)', // Shadow only at top and bottom
         }}>
           <CardContent>
-            <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight:'bold',textAlign: 'left' }}>
+            <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight:'bold',textAlign: 'left',fontFamily: 'Georgia, serif' }}>
               {article.title}
             </Typography>
-            <Typography size="small" color="textSecondary" sx={{ mb: 2 }}>
+            <Typography size="small" color="textSecondary" sx={{ mb: 2, fontFamily: 'Georgia, serif'}}>
               {new Date(article.pubDate).toLocaleDateString('en-US', { day: 'numeric', month: 'long' })} / {article.source}
             </Typography>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -43,7 +43,7 @@ const ArticleDetails = () => {
 
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <Typography variant="body1" sx={{ textAlign: 'left', fontSize: 18, fontFamily: 'Open Sans', lineHeight: 1.5 }}>
+                <Typography variant="body1" sx={{ textAlign: 'left', fontSize: 18, fontFamily: 'Georgia, serif', lineHeight: 1.5 }}>
                   {article.content
                     .split(/<br\/>/)
                     .map((paragraph, index) => paragraph.trim())
