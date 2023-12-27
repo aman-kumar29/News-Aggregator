@@ -108,8 +108,8 @@ const NewsDetails = ({ apiKey, keywords, category, country, timeframe, language 
   };
 
   return (
-    <Container className="news-container" sx={{ backgroundColor: '#f0f0f0' }}>
-      <Typography variant="h3" sx={{ color: '#007BFF', paddingBottom:'30px',paddingTop:'10px' }}>Latest News</Typography>
+    <Container className="news-container" sx={{ backgroundColor: '#F7F7F7',fontFamily: 'Georgia, serif' }}>
+      <Typography variant="h3" sx={{ color: '#393E46', paddingBottom:'30px',paddingTop:'10px' }}>Latest News</Typography>
       {news.length > 0 ? (
         <>
           <Box className="news-cards" sx={{ marginTop: '16px' }}>
@@ -119,12 +119,12 @@ const NewsDetails = ({ apiKey, keywords, category, country, timeframe, language 
           </Box>
           <Box sx={{ marginTop: '16px', display: 'flex', justifyContent: prevPageCode ? 'space-between' : 'center' }}>
             {prevPageCode && (
-              <IconButton onClick={handlePrevPage} sx={{ backgroundColor: '#007BFF', color: '#fff',marginLeft:'5%' }}>
+              <IconButton onClick={handlePrevPage} sx={{ backgroundColor: '#393E46', color: '#fff',marginLeft:'5%' }}>
                 <ArrowBackIcon />
               </IconButton>
             )}
             {nextPageCode && (
-              <IconButton onClick={handleNextPage} sx={{ backgroundColor: '#007BFF', color: '#fff',marginRight:'5%' }}>
+              <IconButton onClick={handleNextPage} sx={{ backgroundColor: '#393E46', color: '#fff',marginRight:'5%' }}>
                 <ArrowForwardIcon />
               </IconButton>
             )}
