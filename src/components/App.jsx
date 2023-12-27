@@ -34,7 +34,7 @@ function App() {
         <Switch>
           <Route exact path="/">
             <NewsDetails
-              apiKey="pub_3543105ef3e9bc681414994eba72a28960936"
+              apiKey="pub_35433cde697fd073e4a7b21406399d51d52ff"
               keywords={searchKeywords}
               category={searchCategory}
               country={searchCountry}
@@ -42,7 +42,7 @@ function App() {
               language={searchLanguage}
             />
           </Route>
-          <Route path="/article/:id" component={() => <ArticleDetails apiKey="pub_3543105ef3e9bc681414994eba72a28960936" />} />
+          <Route path="/article/:id" component={() => <ArticleDetails apiKey="pub_35433cde697fd073e4a7b21406399d51d52ff" />} />
           <Route path="*" component={NotFound} />
         </Switch>
         <Subscribe/>
