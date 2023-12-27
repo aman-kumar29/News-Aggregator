@@ -8,6 +8,9 @@ const placeholderImages = [
   'https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/gigs/264425930/original/930064aa70b89e301e06c1ad37193011102bfdec/write-an-anime-article-of-your-choice.png',
   'https://th.bing.com/th/id/OIP.-9wbS4KOoXXDxyxQYW8q-wHaKm?rs=1&pid=ImgDetMain',
   'https://i.pinimg.com/736x/10/2f/47/102f475c1aba3b8b1d4d3ef187908412--dbz-manga-naruto-vs.jpg',
+  'https://th.bing.com/th/id/OIP.wBE61HpYR9lcGHt4DjyQ8AHaCv?rs=1&pid=ImgDetMain',
+  'https://th.bing.com/th/id/OIP.-WwWJYR_iHJtESh1fNOS6wHaCv?rs=1&pid=ImgDetMain',
+  'https://i.ytimg.com/vi/5GbMYitgYtU/maxresdefault.jpg'
 ];
 
 const NewsCard = ({ article }) => {
@@ -16,7 +19,7 @@ const NewsCard = ({ article }) => {
     title,
     image_url,
     pubDate,
-    content
+    description
   } = article;
 
   const randomImage = placeholderImages[Math.floor(Math.random() * placeholderImages.length)];
@@ -52,7 +55,7 @@ const NewsCard = ({ article }) => {
             {title}
           </Typography>
           <Typography variant="body1" color="text.secondary" style={{ marginBottom: '10px', marginTop: 'auto' }} sx={{ overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
-            {content}
+            {description}
           </Typography>
         </CardContent>
       </CardActionArea>
