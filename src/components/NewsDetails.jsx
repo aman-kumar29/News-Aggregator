@@ -6,7 +6,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import NewsCardSkeleton from './NewsCardSkeleton';
 
-const NewsDetails = ({ apiKey, keywords }) => {
+const NewsDetails = ({ apiKey, keywords, category, country, timeframe, language }) => {
   const [news, setNews] = useState([]);
   const [nextPageCode, setNextPageCode] = useState(null);
   const [prevPageCode, setPrevPageCode] = useState(null);
@@ -16,10 +16,29 @@ const NewsDetails = ({ apiKey, keywords }) => {
       try {
         let apiUrl;
         if (keywords) {
-          apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=${keywords}&language=en`;
+          apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=${keywords}`;
         } else {
-          apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=india&language=en`;
+          apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=india`;
         }
+        if(language){
+          apiUrl+=`&language=${language}`
+        }
+        else{
+          apiUrl+=`&language=en`
+        }
+        if(category){
+          apiUrl+=`&category=${category}`
+        }
+        if(country){
+          apiUrl+=`&country=${country}`
+        }
+        else{
+          apiUrl+=`&country=in`
+        }
+        if(timeframe){
+          apiUrl+=`&timeframe=${timeframe}`
+        }
+        console.log(apiUrl);
         const response = await fetch(apiUrl);
         const data = await response.json();
         setNextPageCode(data.nextPage);
@@ -36,16 +55,34 @@ const NewsDetails = ({ apiKey, keywords }) => {
     };
 
     fetchNews();
-  }, [apiKey, keywords]);
+  }, [apiKey, keywords, category, country, timeframe, language]);
 
   const handleNextPage = async () => {
     try {
       if (nextPageCode !== null) {
         let apiUrl;
         if (keywords) {
-          apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=${keywords}&language=en&page=${nextPageCode}`;
+          apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=${keywords}&page=${nextPageCode}`;
         } else {
-          apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=india&language=en&page=${nextPageCode}`;
+          apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=india&page=${nextPageCode}`;
+        }
+        if(language){
+          apiUrl+=`&language=${language}`
+        }
+        else{
+          apiUrl+=`&language=en`
+        }
+        if(category){
+          apiUrl+=`&category=${category}`
+        }
+        if(country){
+          apiUrl+=`&country=${country}`
+        }
+        else{
+          apiUrl+=`&country=in`
+        }
+        if(timeframe){
+          apiUrl+=`&timeframe=${timeframe}`
         }
         console.log(apiUrl);
         const response = await fetch(apiUrl);
@@ -67,35 +104,12 @@ const NewsDetails = ({ apiKey, keywords }) => {
   };
 
   const handlePrevPage = async () => {
-    // try {
-    //   if (prevPageCode !== null) {
-    //     let apiUrl;
-    //     if (keywords) {
-    //       apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=${keywords}&language=en&page=${prevPageCode}`;
-    //     } else {
-    //       apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=india&language=en&page=${prevPageCode}`;
-    //     }
-    //     console.log(apiUrl);
-    //     const response = await fetch(apiUrl);
-    //     const data = await response.json();
-
-    //     if (data.status === 'success' && data.results && data.results.length > 0) {
-    //       const sortedNews = data.results.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
-    //       setNews(sortedNews.slice(0, 9));
-    //       setNextPageCode(prevPageCode);
-    //       setPrevPageCode(null);
-    //     } else {
-    //       setNextPageCode(prevPageCode);
-    //     }
-    //   }
-    // } catch (error) {
-    //   console.error('Error fetching next page:', error);
-    // }
+    // try
   };
 
   return (
     <Container className="news-container" sx={{ backgroundColor: '#f0f0f0' }}>
-      <Typography variant="h4" sx={{ color: '#007BFF' }}>Latest News</Typography>
+      <Typography variant="h3" sx={{ color: '#007BFF', paddingBottom:'30px',paddingTop:'10px' }}>Latest News</Typography>
       {news.length > 0 ? (
         <>
           <Box className="news-cards" sx={{ marginTop: '16px' }}>
