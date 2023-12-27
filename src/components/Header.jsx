@@ -245,7 +245,7 @@ function Header({ onSearch }) {
               label="Category"
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              sx={{ marginLeft: '1%', width: '8%' }}
+              sx={{ marginLeft: '1%', width: '8%', '@media (max-width: 760px)': { width: '20%' }}}
             >
               <MenuItem value="">None</MenuItem>
               <MenuItem value="top">Top</MenuItem>
@@ -259,7 +259,7 @@ function Header({ onSearch }) {
               label="Country"
               value={selectedCountry}
               onChange={(e) => setSelectedCountry(e.target.value)}
-              sx={{ marginLeft: '1%', width: '8%' }}
+              sx={{ marginLeft: '1%', width: '8%', '@media (max-width: 760px)': { width: '20%' }}}
             >
               <MenuItem value="">None</MenuItem>
               <MenuItem value="in">India</MenuItem>
@@ -274,7 +274,7 @@ function Header({ onSearch }) {
               label="Timeframe"
               value={selectedTimeframe}
               onChange={(e) => setSelectedTimeframe(e.target.value)}
-              sx={{ marginLeft: '1%', width: '8%' }}
+              sx={{ marginLeft: '1%', width: '8%', '@media (max-width: 760px)': { width: '20%' }}}
             >
               <MenuItem value="">None</MenuItem>
               <MenuItem value="1">1 Hour</MenuItem>
@@ -288,7 +288,7 @@ function Header({ onSearch }) {
               label="Language"
               value={selectedLanguage}
               onChange={(e) => setSelectedLanguage(e.target.value)}
-              sx={{ marginLeft: '1%', width: '8%' }}
+              sx={{ marginLeft: '1%', width: '8%', '@media (max-width: 760px)': { width: '20%' }}}
             >
               <MenuItem value="">None</MenuItem>
               <MenuItem value="en">English</MenuItem>
