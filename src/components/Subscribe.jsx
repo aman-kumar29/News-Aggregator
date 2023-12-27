@@ -1,32 +1,30 @@
 import React from 'react';
-import { Card, CardContent, Typography, TextField, Button, Box } from '@mui/material';
 
 function Subscribe() {
-  return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh' }}>
-      <Card sx={{width: '60%', '@media (max-width: 1200px)': { width: '60%'},'@media (max-width: 768px)': {width: '90%'}}}>
-        <CardContent>
-          <Typography variant="h5" sx={{ mb: 2 }}>
-            Join our community and receive updates!
-          </Typography>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <TextField
-              label="Your email address"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-            />
-            <Button variant="contained">
-              Subscribe
-            </Button>
-          </Box>
-          <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
-            © 2023
-          </Typography>
-        </CardContent>
-      </Card>
-    </Box>
-  );
+ return (
+   <div className="subscribe-section">
+     <div className="subscribe-column-left">
+       <h2>Subscribe to Weekly All-Church Updates</h2>
+       <p>
+         Newbreak Church partners with you and your family. Every week we send out an email providing helpful links to the week's content, guides for kids and students so they can follow along at home, as well as updated news and information that are important to Newbreak Church as a whole and specific to our campuses across San Diego County.
+       </p>
+     </div>
+     <div className="subscribe-column-right">
+       <h3>Stay Connected</h3>
+       <form>
+         <div>
+           <input className='subscribe-input' type="text" id="name" placeholder='Name' />
+         </div>
+         <div>
+           <input className='subscribe-input' type="email" id="email" placeholder='Email'/>
+         </div>
+         <div>
+          <button className='subscribe-btn' type="submit">Subscribe</button>
+         </div>
+       </form>
+     </div>
+   </div>
+ );
 }
 
 export default Subscribe;
