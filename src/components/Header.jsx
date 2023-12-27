@@ -79,7 +79,7 @@ function Header({ onSearch }) {
 
   return (
     <>
-      <AppBar position="static" sx={{ background: 'linear-gradient(to right, #64b5f6, #1976d2)' }}>
+      <AppBar position="static" sx={{ background: 'linear-gradient(to right, #393E46, #242629)',color:'#F7F7F7' }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <FitbitIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, fontSize: '2rem', color: '#ffffff' }} />
@@ -91,7 +91,7 @@ function Header({ onSearch }) {
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
-                fontFamily: 'Raleway, sans-serif',
+                fontFamily: 'Georgia, serif',
                 fontWeight: 700,
                 letterSpacing: '.2rem',
                 color: '#ffffff',
@@ -159,7 +159,7 @@ function Header({ onSearch }) {
                 mr: 2,
                 display: { xs: 'flex', md: 'none' },
                 flexGrow: 1,
-                fontFamily: 'Raleway, sans-serif',
+                fontFamily: 'Georgia, serif',
                 fontWeight: 700,
                 letterSpacing: '.2rem',
                 color: '#ffffff',
@@ -211,10 +211,11 @@ function Header({ onSearch }) {
         </button>
         <div className="overlay-content">
         <form onSubmit={handleSubmit}>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Box>
             {/* Existing TextField and Button components */}
             <TextField
-              sx={{ width: '30%', marginLeft: '5%', '@media (max-width: 1200px)': { width: '50%', marginLeft: '25%' }, '@media (max-width: 768px)': { width: '70%', marginLeft: '15%' }, marginRight: '1%', borderRadius: '30px 0px 0px 30px' }}
+              InputProps={{ sx: { borderRadius: 20 } }}
+              sx={{ width: '40%', marginLeft: '5%', '@media (max-width: 1200px)': { width: '50%', marginLeft: '25%' }, '@media (max-width: 768px)': { width: '70%', marginLeft: '15%' }, marginRight: '1%' }}
               type="text"
               placeholder="Enter your search keyword..."
               value={searchText}
@@ -223,11 +224,11 @@ function Header({ onSearch }) {
             <Button
               onClick={handleSearch}
               sx={{
-                padding: '12px 15px',
-                borderRadius: '0px 30px 30px 0px',
+                padding: '12px 25px',
+                borderRadius: '30px 30px 30px 30px',
                 transition: '0.3s',
-                background: '#007BFF',
-                color: 'white',
+                background: '#393E46',
+                color: '#F7F7F7',
                 '&:hover': {
                   backgroundColor: '#0056b3',
                 },
@@ -236,14 +237,15 @@ function Header({ onSearch }) {
             >
               Search
             </Button>
-
-            {/* Filter options */}
-            <TextField
+          </Box>
+          <Box>
+          <TextField
+              InputProps={{ sx: { borderRadius: 20 } }}
               select
               label="Category"
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              sx={{ marginLeft: '1%', width: '10%' }}
+              sx={{ marginLeft: '1%', width: '8%' }}
             >
               <MenuItem value="">None</MenuItem>
               <MenuItem value="top">Top</MenuItem>
@@ -252,11 +254,12 @@ function Header({ onSearch }) {
             </TextField>
 
             <TextField
+              InputProps={{ sx: { borderRadius: 20 } }}
               select
               label="Country"
               value={selectedCountry}
               onChange={(e) => setSelectedCountry(e.target.value)}
-              sx={{ marginLeft: '1%', width: '10%' }}
+              sx={{ marginLeft: '1%', width: '8%' }}
             >
               <MenuItem value="">None</MenuItem>
               <MenuItem value="in">India</MenuItem>
@@ -266,11 +269,12 @@ function Header({ onSearch }) {
             </TextField>
 
             <TextField
+              InputProps={{ sx: { borderRadius: 20 } }}
               select
               label="Timeframe"
               value={selectedTimeframe}
               onChange={(e) => setSelectedTimeframe(e.target.value)}
-              sx={{ marginLeft: '1%', width: '10%' }}
+              sx={{ marginLeft: '1%', width: '8%' }}
             >
               <MenuItem value="">None</MenuItem>
               <MenuItem value="1">1 Hour</MenuItem>
@@ -279,11 +283,12 @@ function Header({ onSearch }) {
             </TextField>
 
             <TextField
+              InputProps={{ sx: { borderRadius: 20 } }}
               select
               label="Language"
               value={selectedLanguage}
               onChange={(e) => setSelectedLanguage(e.target.value)}
-              sx={{ marginLeft: '1%', width: '10%' }}
+              sx={{ marginLeft: '1%', width: '8%' }}
             >
               <MenuItem value="">None</MenuItem>
               <MenuItem value="en">English</MenuItem>
