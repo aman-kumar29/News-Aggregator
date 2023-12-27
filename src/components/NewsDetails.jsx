@@ -3,7 +3,7 @@ import NewsCard from './NewsCard';
 import {Button, Container, Typography, Box } from '@mui/material';
 import NewsCardSkeleton from './NewsCardSkeleton';
 
-const NewsDetails = ({ apiKey, keywords }) => {
+const NewsDetails = ({ apiKey, keywords}) => {
   const [news, setNews] = useState([]);
   const [nextPageCode, setNextPageCode] = useState(null);
 
@@ -19,7 +19,8 @@ const NewsDetails = ({ apiKey, keywords }) => {
                 }
                 const response = await fetch(apiUrl);
                 const data = await response.json();
-
+                setNextPageCode(data.nextPage);
+                console.log(apiUrl)
         if (data.status === 'success' && data.results && data.results.length > 0) {
           const sortedNews = data.results.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
           setNews(sortedNews.slice(0,9));  // Update state with sorted news data
@@ -42,13 +43,13 @@ const NewsDetails = ({ apiKey, keywords }) => {
             } else {
                 apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=india&language=en&page=${nextPageCode}`;
             }
-
+            console.log(apiUrl)
             const response = await fetch(apiUrl);
             const data = await response.json();
             
             if (data.status === 'success' && data.results && data.results.length > 0) {
                 const sortedNews = data.results.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
-                setNews(sortedNews);
+                setNews(sortedNews.slice(0,9));
                 setNextPageCode(data.nextPage);
             } else {
                 setNextPageCode(null);
@@ -60,7 +61,7 @@ const NewsDetails = ({ apiKey, keywords }) => {
 };
 
   return (
-    <Container className="news-container" sx={{ padding: '16px', backgroundColor: '#f0f0f0' }}>
+    <Container className="news-container" sx={{backgroundColor: '#f0f0f0' }}>
       <Typography variant="h4" sx={{ color: '#007BFF' }}>Latest News</Typography>
       {news.length > 0 ? (
         <>
@@ -94,97 +95,3 @@ const NewsDetails = ({ apiKey, keywords }) => {
 };
 
 export default NewsDetails;
-// import React, { useEffect, useState } from 'react';
-// import NewsCard from './NewsCard';
-// import { Button, Container, Typography, Box } from '@mui/material';
-// import NewsCardSkeleton from './NewsCardSkeleton';
-
-// const NewsDetails = ({ apiKey, keywords }) => {
-//   const [news, setNews] = useState([]);
-//   const [nextPageCode, setNextPageCode] = useState(null);
- 
-//   useEffect(() => {
-//    const fetchNews = async () => {
-//     try {
-//      if (keywords) {
-//       const apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=${keywords}`;
-//       const response = await fetch(apiUrl);
-//       const data = await response.json();
- 
-//       if (data.status === 'success' && data.results && data.results.length > 0) {
-//        const sortedNews = data.results.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
-//        setNextPageCode(data.nextPage);
-//        setNews(sortedNews); // Update state with sorted news data
-//       } else {
-//        setNextPageCode(null);
-//        setNews([]);
-//       }
-//      }
-//     } catch (error) {
-//      console.error('Error fetching news:', error);
-//     }
-//    };
- 
-//    // Call fetchNews only if keywords are present
-//    fetchNews();
-//   }, [apiKey, keywords]);
- 
-//   const handleNextPage = async () => {
-//    try {
-//     if (nextPageCode !== null) {
-//      let apiUrl;
-//      if (keywords) {
-//       apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=${keywords}&page=${nextPageCode}`;
-//      } else {
-//       apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=india&language=en&page=${nextPageCode}`;
-//      }
- 
-//      const response = await fetch(apiUrl);
-//      const data = await response.json();
-//      setNextPageCode(data.nextPage);
- 
-//      if (data.status === 'success' && data.results && data.results.length > 0) {
-//       const sortedNews = data.results.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
-//       setNews(news.concat(sortedNews)); // Append new news to existing ones
-//      }
-//     }
-//    } catch (error) {
-//      console.error('Error fetching next page:', error);
-//     }
-//   };
-
-//   return (
-//     <Container className="news-container" sx={{ padding: '16px', backgroundColor: '#f0f0f0' }}>
-//       <Typography variant="h4" sx={{ color: '#007BFF' }}>Latest News</Typography>
-//       {news.length > 0 ? (
-//         <>
-//           <Box className="news-cards" sx={{ marginTop: '16px' }}>
-//             {news.map((article) => (
-//               <NewsCard key={article.article_id} article={article} />
-//             ))}
-//           </Box>
-//           <Box sx={{ marginTop: '16px' }}>
-//             {nextPageCode && (
-//               <Button variant="contained" onClick={handleNextPage} sx={{ backgroundColor: '#007BFF', color: '#fff' }}>
-//                 Next Page
-//               </Button>
-//             )}
-//           </Box>
-//         </>
-//       ) : (
-//         <>
-//           <Box className="news-cards" sx={{ marginTop: '16px' }}>
-//             <NewsCardSkeleton />
-//             <NewsCardSkeleton />
-//             <NewsCardSkeleton />
-//             <NewsCardSkeleton />
-//             <NewsCardSkeleton />
-//             <NewsCardSkeleton />
-//           </Box>
-//         </>
-//       )}
-//     </Container>
-//   );
-// };
-
-// export default NewsDetails;
