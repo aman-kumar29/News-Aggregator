@@ -52,6 +52,10 @@ function Header({ onSearch }) {
     onSearch(searchText);
     closeSearch();
   };
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent the default form submission
+    handleSearch();
+  };
 
   return (
     <>
@@ -186,7 +190,7 @@ function Header({ onSearch }) {
           &times;
         </button>
         <div className="overlay-content">
-          <form>
+          <form onSubmit={handleSubmit}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <TextField
                 sx={{ width: '30%',marginLeft:'35%', marginRight: '1%', borderRadius: '30px 0px 0px 30px' }}
@@ -194,11 +198,6 @@ function Header({ onSearch }) {
                 placeholder="Enter your search keyword..."
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    handleSearch();
-                  }
-                }}
               />
               <Button
                 onClick={handleSearch}
