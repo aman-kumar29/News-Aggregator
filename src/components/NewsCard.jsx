@@ -16,7 +16,6 @@ const NewsCard = ({ article }) => {
     title,
     image_url,
     pubDate,
-    source,
     content
   } = article;
 
