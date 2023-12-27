@@ -4,7 +4,7 @@ import { Card, CardContent, Typography, TextField, Button, Box } from '@mui/mate
 function Subscribe() {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh' }}>
-      <Card sx={{ width: '70%', minWidth: 500, maxWidth: 700 }}> {/* Responsive width */}
+      <Card sx={{width: '60%', '@media (max-width: 1200px)': { width: '60%'},'@media (max-width: 768px)': {width: '90%'}}}>
         <CardContent>
           <Typography variant="h5" sx={{ mb: 2 }}>
             Join our community and receive updates!
