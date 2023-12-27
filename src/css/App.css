@@ -158,7 +158,7 @@ button.search-btn {
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(255, 255, 255, 1);
   transition: 0.5s;
   overflow-x: hidden;
 }
@@ -235,7 +235,7 @@ button.search-btn {
 .news-cards {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
   gap: 2%;
   padding: 0 20px; /* Add padding to both left and right sides */
 }
@@ -308,12 +308,16 @@ button.search-btn {
 @media (max-width: 992px) {
   .news-card {
     flex-basis: calc(50% - 20px);
+    justify-content: center;  /* Center the cards horizontally */
+    align-items: center;      /* Center the cards vertically */
   }
 }
 
 @media (max-width: 768px) {
   .news-card {
     flex-basis: calc(100% - 20px);
+    justify-content: center;  /* Center the cards horizontally */
+    align-items: center;      /* Center the cards vertically */
   }
 }
 
