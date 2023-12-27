@@ -29,6 +29,7 @@ const NewsCard = ({ article }) => {
 
   return (
     <Card sx={{
+      fontFamily: 'Georgia, serif',
       width: '300px',
       height: '410px',
       display: 'flex',
