@@ -21,9 +21,10 @@ import SearchIcon from '@mui/icons-material/Search';
 function Header({ onSearch }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [searchText, setSearchText] = useState('');
-  // const [isSearchFocused, setIsSearchFocused] = useState(false);
-
-  
+  const [selectedCategory, setSelectedCategory] = useState(''); // State for selected category
+  const [selectedCountry, setSelectedCountry] = useState(''); // State for selected country
+  const [selectedTimeframe, setSelectedTimeframe] = useState(''); // State for selected timeframe
+  const [selectedLanguage, setSelectedLanguage] = useState(''); // State for selected language
   const overlayRef = useRef();
   
   const openSearch = () => {
@@ -43,19 +44,38 @@ function Header({ onSearch }) {
   };
   
   const handleCategory = (category) => {
-    console.log(category);
-    onSearch(category);
+    const searchOptions = {
+      category: category,
+      country: selectedCountry,
+      timeframe: selectedTimeframe,
+      language: selectedLanguage,
+    };
+  
+    onSearch('', searchOptions);
     handleCloseNavMenu();
     closeSearch();
   };
   const handleSearch = () => {
-    onSearch(searchText);
+    const searchOptions = {
+      category: selectedCategory,
+      country: selectedCountry,
+      timeframe: selectedTimeframe,
+      language: selectedLanguage,
+    };
+
+    onSearch(searchText, searchOptions);
     closeSearch();
   };
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
-    handleSearch();
+    handleSearch(searchText, {
+      category: selectedCategory,
+      country: selectedCountry,
+      timeframe: selectedTimeframe,
+      language: selectedLanguage,
+    });
   };
+  
 
   return (
     <>
@@ -155,21 +175,21 @@ function Header({ onSearch }) {
                 onClick={() => handleCategory('top')}
                 sx={{ my: 2, color: '#ffffff', display: 'block', fontSize: '1rem' }}
               >
-                Trending News
-              </Button>
-              <Button
-                key="top1"
-                onClick={() => handleCategory('top')}
-                sx={{ my: 2, color: '#ffffff', display: 'block', fontSize: '1rem' }}
-              >
                 Top News
               </Button>
               <Button
-                key="sports"
+                key="top1"
                 onClick={() => handleCategory('sports')}
                 sx={{ my: 2, color: '#ffffff', display: 'block', fontSize: '1rem' }}
               >
                 Sports News
+              </Button>
+              <Button
+                key="sports"
+                onClick={() => handleCategory('top')}
+                sx={{ my: 2, color: '#ffffff', display: 'block', fontSize: '1rem' }}
+              >
+                Trending News
               </Button>
               {/* Add more buttons as needed */}
             </Box>
@@ -190,33 +210,88 @@ function Header({ onSearch }) {
           &times;
         </button>
         <div className="overlay-content">
-          <form onSubmit={handleSubmit}>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <TextField
-                sx={{ width: '30%',marginLeft:'35%', marginRight: '1%', borderRadius: '30px 0px 0px 30px' }}
-                type="text"
-                placeholder="Enter your search keyword..."
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-              />
-              <Button
-                onClick={handleSearch}
-                sx={{
-                  padding: '12px 15px',
-                  borderRadius: '0px 30px 30px 0px',
-                  transition: '0.3s',
-                  background: '#007BFF',
-                  color: 'white',
-                  '&:hover': {
-                    backgroundColor: '#0056b3',
-                  },
-                }}
-                variant="contained"
-              >
-                Search
-              </Button>
-            </Box>
-          </form>
+        <form onSubmit={handleSubmit}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            {/* Existing TextField and Button components */}
+            <TextField
+              sx={{ width: '30%', marginLeft: '5%', '@media (max-width: 1200px)': { width: '50%', marginLeft: '25%' }, '@media (max-width: 768px)': { width: '70%', marginLeft: '15%' }, marginRight: '1%', borderRadius: '30px 0px 0px 30px' }}
+              type="text"
+              placeholder="Enter your search keyword..."
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+            <Button
+              onClick={handleSearch}
+              sx={{
+                padding: '12px 15px',
+                borderRadius: '0px 30px 30px 0px',
+                transition: '0.3s',
+                background: '#007BFF',
+                color: 'white',
+                '&:hover': {
+                  backgroundColor: '#0056b3',
+                },
+              }}
+              variant="contained"
+            >
+              Search
+            </Button>
+
+            {/* Filter options */}
+            <TextField
+              select
+              label="Category"
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              sx={{ marginLeft: '1%', width: '10%' }}
+            >
+              <MenuItem value="">None</MenuItem>
+              <MenuItem value="top">Top</MenuItem>
+              <MenuItem value="sports">Sports</MenuItem>
+              {/* Add more categories as needed */}
+            </TextField>
+
+            <TextField
+              select
+              label="Country"
+              value={selectedCountry}
+              onChange={(e) => setSelectedCountry(e.target.value)}
+              sx={{ marginLeft: '1%', width: '10%' }}
+            >
+              <MenuItem value="">None</MenuItem>
+              <MenuItem value="in">India</MenuItem>
+              <MenuItem value="us">United States</MenuItem>
+              <MenuItem value="gb">United Kingdom</MenuItem>
+              <MenuItem value="ca">Canada</MenuItem>
+            </TextField>
+
+            <TextField
+              select
+              label="Timeframe"
+              value={selectedTimeframe}
+              onChange={(e) => setSelectedTimeframe(e.target.value)}
+              sx={{ marginLeft: '1%', width: '10%' }}
+            >
+              <MenuItem value="">None</MenuItem>
+              <MenuItem value="1">1 Hour</MenuItem>
+              <MenuItem value="6">6 Hours</MenuItem>
+              <MenuItem value="24">24 Hours</MenuItem>
+            </TextField>
+
+            <TextField
+              select
+              label="Language"
+              value={selectedLanguage}
+              onChange={(e) => setSelectedLanguage(e.target.value)}
+              sx={{ marginLeft: '1%', width: '10%' }}
+            >
+              <MenuItem value="">None</MenuItem>
+              <MenuItem value="en">English</MenuItem>
+              <MenuItem value="hi">Hindi</MenuItem>
+              <MenuItem value="jp">Japanese</MenuItem>
+            </TextField>
+          </Box>
+        </form>
         </div>
       </div>
     </>
