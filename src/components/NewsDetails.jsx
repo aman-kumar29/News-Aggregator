@@ -10,10 +10,14 @@ const NewsDetails = ({ apiKey, keywords, category, country, timeframe, language 
   const [news, setNews] = useState([]);
   const [nextPageCode, setNextPageCode] = useState(null);
   const [prevPageCode, setPrevPageCode] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
 
   useEffect(() => {
     const fetchNews = async () => {
       try {
+        setIsLoading(true);
+        setTimeout(async () => {
         let apiUrl;
         if (keywords) {
           apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=${keywords}`;
@@ -49,6 +53,8 @@ const NewsDetails = ({ apiKey, keywords, category, country, timeframe, language 
         } else {
           setNews([]);
         }
+        setIsLoading(false);
+      },1000);
       } catch (error) {
         console.error('Error fetching news:', error);
       }
@@ -59,6 +65,8 @@ const NewsDetails = ({ apiKey, keywords, category, country, timeframe, language 
 
   const handleNextPage = async () => {
     try {
+      setIsLoading(true);
+      setTimeout(async () => {
       if (nextPageCode !== null) {
         let apiUrl;
         if (keywords) {
@@ -98,6 +106,8 @@ const NewsDetails = ({ apiKey, keywords, category, country, timeframe, language 
           setNextPageCode(null);
         }
       }
+      setIsLoading(false);
+    },1000);
     } catch (error) {
       console.error('Error fetching next page:', error);
     }
@@ -108,42 +118,41 @@ const NewsDetails = ({ apiKey, keywords, category, country, timeframe, language 
   };
 
   return (
-    <Container className="news-container" sx={{ backgroundColor: '#F7F7F7',fontFamily: 'Georgia, serif' }}>
-      <Typography variant="h3" sx={{ color: '#393E46', paddingBottom:'30px',paddingTop:'10px' }}>Latest News</Typography>
-      {news.length > 0 ? (
-        <>
-          <Box className="news-cards" sx={{ marginTop: '16px' }}>
-            {news.map((article) => (
-              <NewsCard key={article.article_id} article={article} />
-            ))}
-          </Box>
-          <Box sx={{ marginTop: '16px', display: 'flex', justifyContent: prevPageCode ? 'space-between' : 'center' }}>
-            {prevPageCode && (
-              <IconButton onClick={handlePrevPage} sx={{ backgroundColor: '#393E46', color: '#fff',marginLeft:'5%' }}>
-                <ArrowBackIcon />
-              </IconButton>
-            )}
-            {nextPageCode && (
-              <IconButton onClick={handleNextPage} sx={{ backgroundColor: '#393E46', color: '#fff',marginRight:'5%' }}>
-                <ArrowForwardIcon />
-              </IconButton>
-            )}
-          </Box>
-        </>
+    <Container className="news-container" sx={{ backgroundColor: '#F7F7F7', fontFamily: 'Georgia, serif' }}>
+      <Typography variant="h3" sx={{ color: '#393E46', paddingBottom: '30px', paddingTop: '10px' }}>Latest News</Typography>
+      {isLoading ? (
+        <Box className="news-cards" sx={{ marginTop: '16px' }}>
+          {/* Render loading skeletons */}
+          {[1, 2, 3, 4, 5, 6].map((index) => (
+            <NewsCardSkeleton key={index} />
+          ))}
+        </Box>
       ) : (
-        <>
-          <Box className="news-cards" sx={{ marginTop: '16px' }}>
-            <NewsCardSkeleton />
-            <NewsCardSkeleton />
-            <NewsCardSkeleton />
-            <NewsCardSkeleton />
-            <NewsCardSkeleton />
-            <NewsCardSkeleton />
-          </Box>
-        </>
+        news.length > 0 ? (
+          <>
+            <Box className="news-cards" sx={{ marginTop: '16px' }}>
+              {news.map((article) => (
+                <NewsCard key={article.article_id} article={article} />
+              ))}
+            </Box>
+            <Box sx={{ marginTop: '16px', display: 'flex', justifyContent: prevPageCode ? 'space-between' : 'center' }}>
+              {prevPageCode && (
+                <IconButton onClick={handlePrevPage} sx={{ backgroundColor: '#393E46', color: '#fff', marginLeft: '5%' }}>
+                  <ArrowBackIcon />
+                </IconButton>
+              )}
+              {nextPageCode && (
+                <IconButton onClick={handleNextPage} sx={{ backgroundColor: '#393E46', color: '#fff', marginRight: '5%' }}>
+                  <ArrowForwardIcon />
+                </IconButton>
+              )}
+            </Box>
+          </>
+        ) : (
+          <div>No articles found</div>
+        )
       )}
     </Container>
-  );
-};
-
+  );  
+}
 export default NewsDetails;

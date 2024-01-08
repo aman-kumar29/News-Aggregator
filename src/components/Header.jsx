@@ -222,6 +222,7 @@ function Header({ onSearch }) {
               onChange={(e) => setSearchText(e.target.value)}
             />
             <Button
+              type ="submit"
               onClick={handleSearch}
               sx={{
                 padding: '12px 25px',
