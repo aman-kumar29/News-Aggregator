@@ -118,21 +118,31 @@ button.search-btn {
 
 .subscribe-section {
   display: flex;
-  justify-content:center;
-  align-items: center;
-  height: 100%; /* Ensure full section height */
-  padding: 20px;
-  background-color: #c7c7c7; /* Optional background color */
-}
-
-.subscribe-column-left {
-  width: 60%;
-}
-
-.subscribe-column-right {
-  width: 40%;
-  align-items: center;
+  flex-direction: column; /* Stack columns on small screens */
   justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 20px;
+  background-color: #c7c7c7;
+}
+
+.subscribe-column-left,
+.subscribe-column-right {
+  width: 100%; /* Full width on small screens */
+}
+
+@media screen and (min-width: 768px) {
+  .subscribe-section {
+    flex-direction: row; /* Use row layout on larger screens */
+  }
+
+  .subscribe-column-left {
+    width: 60%;
+  }
+
+  .subscribe-column-right {
+    width: 40%;
+  }
 }
 
 .subscribe-column-left h2,
@@ -156,7 +166,7 @@ label {
   width: 60%;
   padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 30px;
+  border-radius: 40px;
 }
 .subscribe-btn {
   /* Ensure consistent height and width */
