@@ -11,8 +11,8 @@ const NewsDetails = ({ apiKey, keywords, category, country, timeframe, language 
   const [nextPageCode, setNextPageCode] = useState(null);
   const [prevPageCode, setPrevPageCode] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-
-
+  const stack = [];
+  stack.push(null);
   useEffect(() => {
     const fetchNews = async () => {
       try {
@@ -68,6 +68,7 @@ const NewsDetails = ({ apiKey, keywords, category, country, timeframe, language 
       setIsLoading(true);
       setTimeout(async () => {
       if (nextPageCode !== null) {
+        stack.push(nextPageCode);
         let apiUrl;
         if (keywords) {
           apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=${keywords}&page=${nextPageCode}`;
@@ -114,7 +115,52 @@ const NewsDetails = ({ apiKey, keywords, category, country, timeframe, language 
   };
 
   const handlePrevPage = async () => {
-    // try
+    try {
+      setIsLoading(true);
+      setTimeout(async () => {
+      setPrevPageCode(stack.pop());
+      if (prevPageCode !== null) {
+        let apiUrl;
+        if (keywords) {
+          apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=${keywords}&page=${prevPageCode}`;
+        } else {
+          apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=india&page=${prevPageCode}`;
+        }
+        if(language){
+          apiUrl+=`&language=${language}`
+        }
+        else{
+          apiUrl+=`&language=en`
+        }
+        if(category){
+          apiUrl+=`&category=${category}`
+        }
+        if(country){
+          apiUrl+=`&country=${country}`
+        }
+        else{
+          apiUrl+=`&country=in`
+        }
+        if(timeframe){
+          apiUrl+=`&timeframe=${timeframe}`
+        }
+        console.log(apiUrl);
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        if (data.status === 'success' && data.results && data.results.length > 0) {
+          const sortedNews = data.results.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+          setNews(sortedNews.slice(0, 9));
+          setPrevPageCode(stack[stack.length - 1]);
+        } else {
+          setPrevPageCode(nextPageCode);
+        }
+      }
+      setIsLoading(false);
+    },1000);
+    } catch (error) {
+      console.error('Error fetching next page:', error);
+    }
   };
 
   return (
