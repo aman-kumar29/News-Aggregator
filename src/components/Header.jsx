@@ -236,8 +236,67 @@ function Header({ onSearch }) {
               variant="contained"
             >
               Search
-            </button>
-          </form>
+            </Button>
+          </Box>
+          <Box>
+          <TextField
+              InputProps={{ sx: { borderRadius: 20 } }}
+              select
+              label="Category"
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              sx={{ marginLeft: '1%', width: '8%' }}
+            >
+              <MenuItem value="">None</MenuItem>
+              <MenuItem value="top">Top</MenuItem>
+              <MenuItem value="sports">Sports</MenuItem>
+              {/* Add more categories as needed */}
+            </TextField>
+
+            <TextField
+              InputProps={{ sx: { borderRadius: 20 } }}
+              select
+              label="Country"
+              value={selectedCountry}
+              onChange={(e) => setSelectedCountry(e.target.value)}
+              sx={{ marginLeft: '1%', width: '8%' }}
+            >
+              <MenuItem value="">None</MenuItem>
+              <MenuItem value="in">India</MenuItem>
+              <MenuItem value="us">United States</MenuItem>
+              <MenuItem value="gb">United Kingdom</MenuItem>
+              <MenuItem value="ca">Canada</MenuItem>
+            </TextField>
+
+            <TextField
+              InputProps={{ sx: { borderRadius: 20 } }}
+              select
+              label="Timeframe"
+              value={selectedTimeframe}
+              onChange={(e) => setSelectedTimeframe(e.target.value)}
+              sx={{ marginLeft: '1%', width: '8%' }}
+            >
+              <MenuItem value="">None</MenuItem>
+              <MenuItem value="1">1 Hour</MenuItem>
+              <MenuItem value="6">6 Hours</MenuItem>
+              <MenuItem value="24">24 Hours</MenuItem>
+            </TextField>
+
+            <TextField
+              InputProps={{ sx: { borderRadius: 20 } }}
+              select
+              label="Language"
+              value={selectedLanguage}
+              onChange={(e) => setSelectedLanguage(e.target.value)}
+              sx={{ marginLeft: '1%', width: '8%' }}
+            >
+              <MenuItem value="">None</MenuItem>
+              <MenuItem value="en">English</MenuItem>
+              <MenuItem value="hi">Hindi</MenuItem>
+              <MenuItem value="jp">Japanese</MenuItem>
+            </TextField>
+          </Box>
+        </form>
         </div>
       </div>
     </>
