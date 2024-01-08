@@ -15,10 +15,10 @@ import FitbitIcon from '@mui/icons-material/Fitbit';
 
 const Footer = () => {
   return (
-    <Box sx={{p: 6, display: 'flex', flexDirection: 'column', alignItems: 'center' }} component="footer" style={{backgroundColor:'rgb(0,0,0,0.2'}}>
+    <Box sx={{p: 6, display: 'flex', flexDirection: 'column', alignItems: 'center',background: 'linear-gradient(to right, #393E46, #242629)',color:'#F7F7F7',fontFamily: 'Georgia, serif' }} component="footer">
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <IconButton size="large">
+          <IconButton size="large" sx={{color:'#F7F7F7'}}>
             <FitbitIcon />
           </IconButton>
           <Typography variant="h4" sx={{ ml: 2 }}>
@@ -46,8 +46,8 @@ const Footer = () => {
           </IconButton>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="body2" color="text.secondary" align="center">
-            © {new Date().getFullYear()} NewZera
+          <Typography variant="body1" align="center">
+             Made By Aman❤️️
           </Typography>
         </Grid>
       </Grid>

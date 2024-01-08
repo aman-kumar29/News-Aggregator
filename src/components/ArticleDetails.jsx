@@ -1,24 +1,77 @@
-// ArticleDetails.jsx
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import {
+  Container,
+  Typography,
+  Card,
+  CardContent,
+  CardMedia,
+  Box,
+  Grid,
+} from '@mui/material';
+import NewsCardSkeleton from './NewsCardSkeleton';
 
 const ArticleDetails = () => {
   const location = useLocation();
   const { article } = location.state || {};
 
   return (
-    <div className="article-details-container">
+    <Container maxWidth="md" sx={{ mt: 4, bgcolor: '#F7F7F7', padding: '20px' }}>
       {article ? (
-        <div className="article-details">
-          <h1 className="article-title">{article.title}</h1>
-          <p className="published-date">{article.pubDate}</p>
-          {article.image_url && <img src={article.image_url} alt={article.title} className="article-image" />}
-          <p className="article-content">{article.content}</p>
-        </div>
+        <Card sx={{
+          borderRadius: 10,
+          boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.15) 0px 0px 0px rgba(0, 0, 0, 0)', // Shadow only at top and bottom
+        }}>
+          <CardContent>
+            <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight:'bold',textAlign: 'left',fontFamily: 'Georgia, serif' }}>
+              {article.title}
+            </Typography>
+            <Typography size="small" color="textSecondary" sx={{ mb: 2, fontFamily: 'Georgia, serif'}}>
+              {new Date(article.pubDate).toLocaleDateString('en-US', { day: 'numeric', month: 'long' })} / {article.source}
+            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              {article.image_url && (
+                <CardMedia
+                  component="img"
+                  height="250" // Adjusted image height
+                  image={article.image_url}
+                  alt={article.title}
+                  sx={{ borderRadius: 5, maxWidth: '500px', margin: '20px auto' }}
+                />
+              )}
+            </Box>
+
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography variant="body1" sx={{ textAlign: 'left', fontSize: 18, fontFamily: 'Georgia, serif', lineHeight: 1.5 }}>
+                  {article.content
+                    .split(/<br\/>/)
+                    .map((paragraph, index) => paragraph.trim())
+                    .flatMap((paragraph) => paragraph.split(/\.(\s+)/))
+                    .reduce((acc, paragraph, i) => {
+                      if (i % 3 === 0) {
+                        acc.push([]);
+                      }
+                      acc[acc.length - 1].push(paragraph);
+                      return acc;
+                    }, [])
+                    .map((paragraphGroup, index) => (
+                      <div key={index}>
+                        {paragraphGroup.map((paragraph, index) => (
+                          <p key={index} style={{ marginBottom: 16 }}>{paragraph}</p>
+                        ))}
+                        {index !== paragraphGroup.length - 1 && <br />}
+                      </div>
+                    ))}
+                </Typography>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
       ) : (
-        <p>No article data available.</p>
+        <NewsCardSkeleton />
       )}
-    </div>
+    </Container>
   );
 };
 

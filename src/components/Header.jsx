@@ -1,105 +1,3 @@
-// import React, { useState } from 'react';
-// import { Grid, IconButton, Typography, Button, Stack } from '@mui/material';
-// import FitbitIcon from '@mui/icons-material/Fitbit';
-// import SearchIcon from '@mui/icons-material/Search';
-// import { useRef } from 'react';
-
-// const Header = ({ onSearch }) => {
-//   const [searchText, setSearchText] = useState('');
-//   const [isSearchFocused, setIsSearchFocused] = useState(false); // Track whether the search input is focused
-
-//   const handleSearch = () => {
-//     onSearch(searchText);
-//     closeSearch();
-//   };
-
-//   const overlayRef = useRef();
-
-//   const openSearch = () => {
-//     overlayRef.current.style.width = '100%';
-//     setIsSearchFocused(true); // Set the flag to true when opening the search
-//   };
-
-//   const closeSearch = () => {
-//     overlayRef.current.style.width = '0%';
-//     setIsSearchFocused(false); // Reset the flag when closing the search
-//   };
-
-//   const handleCategory = (category) => {
-//     onSearch(category);
-//   };
-
-//   return (
-//     <>
-//       <Grid container alignItems="center">
-//         <Grid item>
-//           <IconButton size="large" edge="start" aria-label="logo">
-//             <FitbitIcon />
-//           </IconButton>
-//         </Grid>
-//         <Grid item>
-//           <Typography variant="h6" component="div">
-//             NewZera
-//           </Typography>
-//         </Grid>
-//         <Grid item xs={8} md={6}>
-//           <Stack direction="row" spacing={2}>
-//             <Button color="inherit" onClick={() => handleCategory('top')}>
-//               Top News
-//             </Button>
-//             <Button color="inherit" onClick={() => handleCategory('sports')}>
-//               Sports News
-//             </Button>
-//             <Button color="inherit" onClick={() => handleCategory('entertainment')}>
-//               Entertainment News
-//             </Button>
-//           </Stack>
-//         </Grid>
-//         <Grid item xs={false} md={4} />
-
-//         <Grid item>
-//           <IconButton size="large" edge="end" aria-label="search-icon-img" onClick={openSearch}>
-//             <SearchIcon />
-//           </IconButton>
-//         </Grid>
-//         <Grid item>
-//           <Button variant="contained" color="primary">
-//             Subscribe
-//           </Button>
-//         </Grid>
-//       </Grid>
-
-//       <div ref={overlayRef} className="overlay">
-//         <button className="close-button" onClick={closeSearch}>
-//           &times;
-//         </button>
-//         <div className="overlay-content">
-//           <form>
-//             <input
-//               className="search-input"
-//               type="text"
-//               placeholder="Enter your search keyword..."
-//               value={searchText}
-//               onChange={(e) => setSearchText(e.target.value)}
-//               onKeyDown={(e) => {
-//                 if (e.key === 'Enter') {
-//                   handleSearch();
-//                 }
-//               }}
-//               onFocus={() => setIsSearchFocused(true)}
-//               onBlur={() => setIsSearchFocused(false)}
-//             />
-//             <button className="search-button" onClick={handleSearch}>
-//               Search
-//             </button>
-//           </form>
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default Header;
 import React, { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -113,6 +11,8 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import TextField from '@mui/material/TextField';
+
 import { useRef } from 'react';
 
 import FitbitIcon from '@mui/icons-material/Fitbit';
@@ -121,39 +21,65 @@ import SearchIcon from '@mui/icons-material/Search';
 function Header({ onSearch }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [searchText, setSearchText] = useState('');
-  // const [isSearchFocused, setIsSearchFocused] = useState(false);
-
-  const handleSearch = () => {
-    onSearch(searchText);
-    closeSearch();
-  };
-
+  const [selectedCategory, setSelectedCategory] = useState(''); // State for selected category
+  const [selectedCountry, setSelectedCountry] = useState(''); // State for selected country
+  const [selectedTimeframe, setSelectedTimeframe] = useState(''); // State for selected timeframe
+  const [selectedLanguage, setSelectedLanguage] = useState(''); // State for selected language
   const overlayRef = useRef();
-
+  
   const openSearch = () => {
     overlayRef.current.style.width = '100%';
   };
-
+  
   const closeSearch = () => {
     overlayRef.current.style.width = '0%';
   };
-
+  
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-
+  
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
+  
   const handleCategory = (category) => {
-    onSearch(category);
-    handleCloseNavMenu(); // Close the menu after selecting a category
+    const searchOptions = {
+      category: category,
+      country: selectedCountry,
+      timeframe: selectedTimeframe,
+      language: selectedLanguage,
+    };
+  
+    onSearch('', searchOptions);
+    handleCloseNavMenu();
+    closeSearch();
   };
+  const handleSearch = () => {
+    const searchOptions = {
+      category: selectedCategory,
+      country: selectedCountry,
+      timeframe: selectedTimeframe,
+      language: selectedLanguage,
+    };
+
+    onSearch(searchText, searchOptions);
+    closeSearch();
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent the default form submission
+    handleSearch(searchText, {
+      category: selectedCategory,
+      country: selectedCountry,
+      timeframe: selectedTimeframe,
+      language: selectedLanguage,
+    });
+  };
+  
 
   return (
     <>
-      <AppBar position="static" sx={{ background: 'linear-gradient(to right, #64b5f6, #1976d2)' }}>
+      <AppBar position="static" sx={{ background: 'linear-gradient(to right, #393E46, #242629)',color:'#F7F7F7' }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <FitbitIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, fontSize: '2rem', color: '#ffffff' }} />
@@ -165,7 +91,7 @@ function Header({ onSearch }) {
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
-                fontFamily: 'Raleway, sans-serif',
+                fontFamily: 'Georgia, serif',
                 fontWeight: 700,
                 letterSpacing: '.2rem',
                 color: '#ffffff',
@@ -233,7 +159,7 @@ function Header({ onSearch }) {
                 mr: 2,
                 display: { xs: 'flex', md: 'none' },
                 flexGrow: 1,
-                fontFamily: 'Raleway, sans-serif',
+                fontFamily: 'Georgia, serif',
                 fontWeight: 700,
                 letterSpacing: '.2rem',
                 color: '#ffffff',
@@ -249,21 +175,21 @@ function Header({ onSearch }) {
                 onClick={() => handleCategory('top')}
                 sx={{ my: 2, color: '#ffffff', display: 'block', fontSize: '1rem' }}
               >
-                Trending News
-              </Button>
-              <Button
-                key="top1"
-                onClick={() => handleCategory('top')}
-                sx={{ my: 2, color: '#ffffff', display: 'block', fontSize: '1rem' }}
-              >
                 Top News
               </Button>
               <Button
-                key="sports"
+                key="top1"
                 onClick={() => handleCategory('sports')}
                 sx={{ my: 2, color: '#ffffff', display: 'block', fontSize: '1rem' }}
               >
                 Sports News
+              </Button>
+              <Button
+                key="sports"
+                onClick={() => handleCategory('top')}
+                sx={{ my: 2, color: '#ffffff', display: 'block', fontSize: '1rem' }}
+              >
+                Trending News
               </Button>
               {/* Add more buttons as needed */}
             </Box>
@@ -274,6 +200,7 @@ function Header({ onSearch }) {
                   <SearchIcon sx={{ fontSize: '1.8rem', color: '#ffffff' }} />
                 </IconButton>
               </Tooltip>
+
             </Box>
           </Toolbar>
         </Container>
@@ -283,38 +210,93 @@ function Header({ onSearch }) {
           &times;
         </button>
         <div className="overlay-content">
-          <form>
-            <input
-              className="search-input"
+        <form onSubmit={handleSubmit}>
+          <Box>
+            {/* Existing TextField and Button components */}
+            <TextField
+              InputProps={{ sx: { borderRadius: 20 } }}
+              sx={{ width: '40%', marginLeft: '5%', '@media (max-width: 1200px)': { width: '50%', marginLeft: '25%' }, '@media (max-width: 768px)': { width: '70%', marginLeft: '15%' }, marginRight: '1%' }}
               type="text"
               placeholder="Enter your search keyword..."
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  handleSearch();
-                }
-              }}
-              // onFocus={() => setIsSearchFocused(true)}
-              // onBlur={() => setIsSearchFocused(false)}
-              // style={{ fontSize: '1rem', padding: '8px', borderRadius: '4px', border: '1px solid #ccc', width: '100%' }}
             />
-            <button
-              className="search-button"
+            <Button
               onClick={handleSearch}
-              // style={{
-              //   fontSize: '1rem',
-              //   padding: '8px',
-              //   borderRadius: '4px',
-              //   border: 'none',
-              //   backgroundColor: '#007BFF',
-              //   color: '#ffffff',
-              //   cursor: 'pointer',
-              // }}
+              sx={{
+                padding: '12px 25px',
+                borderRadius: '30px 30px 30px 30px',
+                transition: '0.3s',
+                background: '#393E46',
+                color: '#F7F7F7',
+                '&:hover': {
+                  backgroundColor: '#0056b3',
+                },
+              }}
+              variant="contained"
             >
               Search
-            </button>
-          </form>
+            </Button>
+          </Box>
+          <Box>
+          <TextField
+              InputProps={{ sx: { borderRadius: 20 } }}
+              select
+              label="Category"
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              sx={{ marginLeft: '1%', width: '8%' }}
+            >
+              <MenuItem value="">None</MenuItem>
+              <MenuItem value="top">Top</MenuItem>
+              <MenuItem value="sports">Sports</MenuItem>
+              {/* Add more categories as needed */}
+            </TextField>
+
+            <TextField
+              InputProps={{ sx: { borderRadius: 20 } }}
+              select
+              label="Country"
+              value={selectedCountry}
+              onChange={(e) => setSelectedCountry(e.target.value)}
+              sx={{ marginLeft: '1%', width: '8%' }}
+            >
+              <MenuItem value="">None</MenuItem>
+              <MenuItem value="in">India</MenuItem>
+              <MenuItem value="us">United States</MenuItem>
+              <MenuItem value="gb">United Kingdom</MenuItem>
+              <MenuItem value="ca">Canada</MenuItem>
+            </TextField>
+
+            <TextField
+              InputProps={{ sx: { borderRadius: 20 } }}
+              select
+              label="Timeframe"
+              value={selectedTimeframe}
+              onChange={(e) => setSelectedTimeframe(e.target.value)}
+              sx={{ marginLeft: '1%', width: '8%' }}
+            >
+              <MenuItem value="">None</MenuItem>
+              <MenuItem value="1">1 Hour</MenuItem>
+              <MenuItem value="6">6 Hours</MenuItem>
+              <MenuItem value="24">24 Hours</MenuItem>
+            </TextField>
+
+            <TextField
+              InputProps={{ sx: { borderRadius: 20 } }}
+              select
+              label="Language"
+              value={selectedLanguage}
+              onChange={(e) => setSelectedLanguage(e.target.value)}
+              sx={{ marginLeft: '1%', width: '8%' }}
+            >
+              <MenuItem value="">None</MenuItem>
+              <MenuItem value="en">English</MenuItem>
+              <MenuItem value="hi">Hindi</MenuItem>
+              <MenuItem value="jp">Japanese</MenuItem>
+            </TextField>
+          </Box>
+        </form>
         </div>
       </div>
     </>

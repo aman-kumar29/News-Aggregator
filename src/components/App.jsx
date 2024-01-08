@@ -4,7 +4,6 @@ import '../css/App.css';
 import Header from './Header';
 import Footer from './Footer';
 import NewsDetails from './NewsDetails';
-// import NewsDetailsCategory from './NewsDetailsCategory';
 import ArticleDetails from './ArticleDetails';
 import Subscribe from './Subscribe';
 
@@ -15,25 +14,35 @@ function NotFound() {
 
 function App() {
   const [searchKeywords, setSearchKeywords] = useState('');
-  // const [searchCategory, setSearchCategory] = useState('');
+  const [searchCategory, setSearchCategory] = useState('');
+  const [searchCountry, setSearchCountry] = useState('');
+  const [searchTimeframe, setSearchTimeframe] = useState('');
+  const [searchLanguage, setSearchLanguage] = useState('');
 
-  const handleSearch = (keywords) => {
-    setSearchKeywords(keywords);
+  const handleSearch = (newKeywords, options) => {
+    setSearchKeywords(newKeywords);
+    setSearchCategory(options.category);
+    setSearchCountry(options.country);
+    setSearchTimeframe(options.timeframe);
+    setSearchLanguage(options.language);
   };
-  // const handleCategorySearch = (category) => {
-  //   setSearchCategory(category);
-  // };
 
   return (
     <Router>
       <div className="App">
-        <Header onSearch={handleSearch}  /> 
-        {/* onCategorySearch = {handleCategorySearch} */}
+        <Header onSearch={handleSearch} />
         <Switch>
           <Route exact path="/">
-            <NewsDetails apiKey="pub_3538878cb1f81c12426d02f635118ab11f95a" keywords={searchKeywords} />
+            <NewsDetails
+              apiKey="pub_35433cde697fd073e4a7b21406399d51d52ff"
+              keywords={searchKeywords}
+              category={searchCategory}
+              country={searchCountry}
+              timeframe={searchTimeframe}
+              language={searchLanguage}
+            />
           </Route>
-          <Route path="/article/:id" component={() => <ArticleDetails apiKey="pub_3543105ef3e9bc681414994eba72a28960936" />} />
+          <Route path="/article/:id" component={() => <ArticleDetails apiKey="pub_35433cde697fd073e4a7b21406399d51d52ff" />} />
           <Route path="*" component={NotFound} />
         </Switch>
         <Subscribe/>
@@ -42,6 +51,5 @@ function App() {
     </Router>
   );
 }
-
 
 export default App;
