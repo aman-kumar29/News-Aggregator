@@ -1,14 +1,14 @@
 # News Aggregator App
 
-Welcome to the News Aggregator App – a responsive and intuitive React application that allows users to stay informed with the latest news headlines. Powered by the News API, this project showcases my skills in front-end development and real-time data integration.
-## Amazon S3 bucket deployement link 
-Steps to deploy it on S3 bucket
-    1. run `npm run build`
-    2. go to aws account and create a S3 bucket.
-    3. change permissions to allow puclic access and static hosting enabled
-    4. go and create a bucket policy and save it
-    5. next upload the build folder contents there and then go visit the static hosting section in the properties tab
-    6. click on the link and hurray!!!! your static website has been deployed
+Welcome to the News Aggregator App – a responsive and intuitive React application that lets users stay informed about the latest news headlines. Powered by the News API, this project showcases my front-end development and real-time data integration skills.
+## Amazon S3 bucket deployment link 
+Steps to deploy it on the S3 bucket
+- run `npm run build`
+- go to the AWS account and create an S3 bucket.
+- change permissions to allow public access and static hosting enabled
+- go and create a bucket policy and save it
+- next upload the build folder contents there and then go visit the static hosting section in the properties tab
+- click on the link and hurray!!!! your static website has been deployed
     
     - http://new-aggregator-app-amankr29.s3-website.ap-south-1.amazonaws.com/
 ## Features
@@ -32,7 +32,7 @@ Steps to deploy it on S3 bucket
 5. Open your browser and visit: `http://localhost:3000`
 
 or 
-1. run this `docker compose up`in your terminal if you have docker installed
+1. run this `docker compose up` in your terminal if you have docker installed
 
 ## Acknowledgments
 
