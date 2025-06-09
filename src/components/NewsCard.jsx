@@ -1,78 +1,63 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Stack, Card, CardContent, Typography, CardActionArea, CardMedia } from '@mui/material';
-import { useTheme } from '@mui/material';
-
+import React from "react";
+import { Card, CardContent, Typography, CardMedia } from "@mui/material";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const placeholderImages = [
-  'https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/gigs/264425930/original/930064aa70b89e301e06c1ad37193011102bfdec/write-an-anime-article-of-your-choice.png',
-  'https://th.bing.com/th/id/OIP.-9wbS4KOoXXDxyxQYW8q-wHaKm?rs=1&pid=ImgDetMain',
-  'https://i.pinimg.com/736x/10/2f/47/102f475c1aba3b8b1d4d3ef187908412--dbz-manga-naruto-vs.jpg',
-  'https://th.bing.com/th/id/OIP.wBE61HpYR9lcGHt4DjyQ8AHaCv?rs=1&pid=ImgDetMain',
-  'https://th.bing.com/th/id/OIP.-WwWJYR_iHJtESh1fNOS6wHaCv?rs=1&pid=ImgDetMain',
-  'https://i.ytimg.com/vi/5GbMYitgYtU/maxresdefault.jpg'
+  "https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/gigs/264425930/original/930064aa70b89e301e06c1ad37193011102bfdec/write-an-anime-article-of-your-choice.png",
+  "https://th.bing.com/th/id/OIP.-9wbS4KOoXXDxyxQYW8q-wHaKm?rs=1&pid=ImgDetMain",
+  "https://i.pinimg.com/736x/10/2f/47/102f475c1aba3b8b1d4d3ef187908412--dbz-manga-naruto-vs.jpg",
+  "https://th.bing.com/th/id/OIP.wBE61HpYR9lcGHt4DjyQ8AHaCv?rs=1&pid=ImgDetMain",
+  "https://th.bing.com/th/id/OIP.-WwWJYR_iHJtESh1fNOS6wHaCv?rs=1&pid=ImgDetMain",
+  "https://i.ytimg.com/vi/5GbMYitgYtU/maxresdefault.jpg",
 ];
 
-const NewsCard = ({ article }) => {
-  const {
-    article_id,
-    title,
-    image_url,
-    pubDate,
-    description
-  } = article;
-
-  const randomImage = placeholderImages[Math.floor(Math.random() * placeholderImages.length)];
-  const theme = useTheme();
-  const [transform, setTransform] = useState(1);
-
+function NewsCard({ article }) {
+  const { article_id, title, image_url, pubDate, description } = article;
+  const img =
+    image_url ||
+    placeholderImages[Math.floor(Math.random() * placeholderImages.length)];
 
   return (
-    <Card sx={{
-      fontFamily: 'Georgia, serif',
-      width: '300px',
-      height: '410px',
-      display: 'flex',
-      flexDirection: 'column',
-      marginBottom: '20px',
-      transform: `scale(${transform})`, // Ensure this line is present
-      transition: theme.transitions.create('transform', {
-        duration: 0.9,
-        easing: 'cubic-bezier(1.0, 1.0, 1.0, 1.0)',
-      }),
-    }}
-    onMouseEnter={() => setTransform(1.02)}
-    onMouseLeave={() => setTransform(1)}>
-      <CardActionArea component={Link} to={{ pathname: `/article/${article_id}`, state: { article }}} style={{ textDecoration: 'none' }}>
-        <CardMedia
-          component="img"
-          height="150px"
-          image={image_url || randomImage}
-          alt={title}
-          style={{ objectFit: 'cover' }}
-        />
-        <CardContent style={{ flex: '1', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '200px' }}>
-          <Typography variant="h6" component="div" style={{ fontWeight:'bold',height: '120px', marginBottom: '10px' }} sx={{ overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}>
+    <motion.div
+      whileHover={{ scale: 1.04 }}
+      transition={{ type: "spring", stiffness: 260, damping: 20 }}
+    >
+      <Card
+        component={Link}
+        to={`/article/${article_id}`}
+        state={{ article }}
+        sx={{
+          textDecoration: "none",
+          width: 300,
+          height: 420,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <CardMedia component="img" height="160" image={img} alt={title} />
+        <CardContent sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" gutterBottom sx={{ fontWeight: 700 }}>
             {title}
           </Typography>
-          <Typography variant="body1" color="text.secondary" style={{ marginBottom: '10px', marginTop: 'auto' }} sx={{ overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
-            {description}
+          <Typography variant="body2" color="text.secondary">
+            {description?.slice(0, 90)}…
           </Typography>
         </CardContent>
-      </CardActionArea>
-      <CardContent>
-        <Stack direction="row" spacing ={9}>
-        <Typography variant="body1" edge='start' color="text.secondary">
-          {new Date(pubDate).toLocaleDateString('en-US', { day: 'numeric', month: 'long' })}
-        </Typography>
-
-          <Typography edge='end' variant='body1' color="text.secondary">
-            3 min. Read
+        <CardContent
+          sx={{ pt: 0, display: "flex", justifyContent: "space-between" }}
+        >
+          <Typography variant="caption">
+            {new Date(pubDate).toLocaleDateString("en-US", {
+              day: "numeric",
+              month: "short",
+            })}
           </Typography>
-        </Stack>
-      </CardContent>
-    </Card>
+          <Typography variant="caption">3 min read</Typography>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
-};
+}
 
 export default NewsCard;

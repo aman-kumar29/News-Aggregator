@@ -1,204 +1,118 @@
-import React, { useEffect, useState } from 'react';
-import NewsCard from './NewsCard';
-import { IconButton, Container, Typography, Box } from '@mui/material';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import React, { useEffect, useState } from "react";
+import { Container, Typography, Grid, Pagination, Box } from "@mui/material";
+import { motion } from "framer-motion";
 
-import NewsCardSkeleton from './NewsCardSkeleton';
+import NewsCard from "./NewsCard";
+import NewsCardSkeleton from "./NewsCardSkeleton";
 
-const NewsDetails = ({ apiKey, keywords, category, country, timeframe, language }) => {
+const PAGE_SIZE = 9;
+const fadeVariant = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -20 },
+};
+
+function NewsDetails({
+  apiKey,
+  keywords,
+  category,
+  country,
+  timeframe,
+  language,
+}) {
   const [news, setNews] = useState([]);
-  const [nextPageCode, setNextPageCode] = useState(null);
-  const [prevPageCode, setPrevPageCode] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const stack = [];
-  stack.push(null);
-  useEffect(() => {
-    const fetchNews = async () => {
-      try {
-        setIsLoading(true);
-        setTimeout(async () => {
-        let apiUrl;
-        if (keywords) {
-          apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=${keywords}`;
-        } else {
-          apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=india`;
-        }
-        if(language){
-          apiUrl+=`&language=${language}`
-        }
-        else{
-          apiUrl+=`&language=en`
-        }
-        if(category){
-          apiUrl+=`&category=${category}`
-        }
-        if(country){
-          apiUrl+=`&country=${country}`
-        }
-        else{
-          apiUrl+=`&country=in`
-        }
-        if(timeframe){
-          apiUrl+=`&timeframe=${timeframe}`
-        }
-        console.log(apiUrl);
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        setNextPageCode(data.nextPage);
-        console.log(apiUrl);
-        if (data.status === 'success' && data.results && data.results.length > 0) {
-          const sortedNews = data.results.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
-          setNews(sortedNews.slice(0, 9)); // Update state with sorted news data
-        } else {
-          setNews([]);
-        }
-        setIsLoading(false);
-      },1000);
-      } catch (error) {
-        console.error('Error fetching news:', error);
-      }
-    };
+  const [page, setPage] = useState(1);
+  const [nextPageToken, setNextPageToken] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-    fetchNews();
-  }, [apiKey, keywords, category, country, timeframe, language]);
-
-  const handleNextPage = async () => {
-    try {
-      setIsLoading(true);
-      setTimeout(async () => {
-      if (nextPageCode !== null) {
-        stack.push(nextPageCode);
-        let apiUrl;
-        if (keywords) {
-          apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=${keywords}&page=${nextPageCode}`;
-        } else {
-          apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=india&page=${nextPageCode}`;
-        }
-        if(language){
-          apiUrl+=`&language=${language}`
-        }
-        else{
-          apiUrl+=`&language=en`
-        }
-        if(category){
-          apiUrl+=`&category=${category}`
-        }
-        if(country){
-          apiUrl+=`&country=${country}`
-        }
-        else{
-          apiUrl+=`&country=in`
-        }
-        if(timeframe){
-          apiUrl+=`&timeframe=${timeframe}`
-        }
-        console.log(apiUrl);
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        if (data.status === 'success' && data.results && data.results.length > 0) {
-          const sortedNews = data.results.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
-          setNews(sortedNews.slice(0, 9));
-          setPrevPageCode(nextPageCode);
-          setNextPageCode(data.nextPage);
-        } else {
-          setPrevPageCode(nextPageCode);
-          setNextPageCode(null);
-        }
-      }
-      setIsLoading(false);
-    },1000);
-    } catch (error) {
-      console.error('Error fetching next page:', error);
-    }
+  const buildUrl = (token = "") => {
+    const params = new URLSearchParams({ apikey: apiKey });
+    params.append("q", keywords || "india");
+    params.append("language", language || "en");
+    if (category) params.append("category", category);
+    params.append("country", country || "in");
+    if (timeframe) params.append("timeframe", timeframe);
+    if (token) params.append("page", token);
+    return `https://newsdata.io/api/1/news?${params.toString()}`;
   };
 
-  const handlePrevPage = async () => {
-    try {
-      setIsLoading(true);
-      setTimeout(async () => {
-      setPrevPageCode(stack.pop());
-      if (prevPageCode !== null) {
-        let apiUrl;
-        if (keywords) {
-          apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=${keywords}&page=${prevPageCode}`;
-        } else {
-          apiUrl = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=india&page=${prevPageCode}`;
-        }
-        if(language){
-          apiUrl+=`&language=${language}`
-        }
-        else{
-          apiUrl+=`&language=en`
-        }
-        if(category){
-          apiUrl+=`&category=${category}`
-        }
-        if(country){
-          apiUrl+=`&country=${country}`
-        }
-        else{
-          apiUrl+=`&country=in`
-        }
-        if(timeframe){
-          apiUrl+=`&timeframe=${timeframe}`
-        }
-        console.log(apiUrl);
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        if (data.status === 'success' && data.results && data.results.length > 0) {
-          const sortedNews = data.results.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
-          setNews(sortedNews.slice(0, 9));
-          setPrevPageCode(stack[stack.length - 1]);
-        } else {
-          setPrevPageCode(nextPageCode);
-        }
-      }
-      setIsLoading(false);
-    },1000);
-    } catch (error) {
-      console.error('Error fetching next page:', error);
+  const fetchNews = async (token = "") => {
+    setLoading(true);
+    const res = await fetch(buildUrl(token));
+    const data = await res.json();
+    if (data.status === "success") {
+      setNews(
+        data.results
+          .sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate))
+          .slice(0, PAGE_SIZE)
+      );
+      setNextPageToken(data.nextPage ?? null);
     }
+    setLoading(false);
+  };
+
+  // Initial + query change
+  useEffect(() => {
+    setPage(1);
+    fetchNews();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [keywords, category, country, timeframe, language]);
+
+  // Pagination (newsdata uses opaque tokens, so page numbers are faux; we just step next/prev)
+  const handleChange = (_e, value) => {
+    if (value > page && nextPageToken) {
+      fetchNews(nextPageToken);
+    } else if (value < page) {
+      // quick client‑side back (history stack could be improved)
+      fetchNews();
+    }
+    setPage(value);
   };
 
   return (
-    <Container className="news-container" sx={{ backgroundColor: '#F7F7F7', fontFamily: 'Georgia, serif' }}>
-      <Typography variant="h3" sx={{ color: '#393E46', paddingBottom: '30px', paddingTop: '10px' }}>Latest News</Typography>
-      {isLoading ? (
-        <Box className="news-cards" sx={{ marginTop: '16px' }}>
-          {/* Render loading skeletons */}
-          {[1, 2, 3, 4, 5, 6].map((index) => (
-            <NewsCardSkeleton key={index} />
-          ))}
-        </Box>
-      ) : (
-        news.length > 0 ? (
+    <motion.div
+      variants={fadeVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
+      <Container sx={{ py: 4 }}>
+        <Typography variant="h3" gutterBottom>
+          Latest News
+        </Typography>
+
+        {loading ? (
+          <Grid container spacing={3}>
+            {Array.from({ length: PAGE_SIZE }).map((_, i) => (
+              <Grid item key={i} xs={12} sm={6} md={4}>
+                <NewsCardSkeleton />
+              </Grid>
+            ))}
+          </Grid>
+        ) : news.length ? (
           <>
-            <Box className="news-cards" sx={{ marginTop: '16px' }}>
+            <Grid container spacing={3}>
               {news.map((article) => (
-                <NewsCard key={article.article_id} article={article} />
+                <Grid item key={article.article_id} xs={12} sm={6} md={4}>
+                  <NewsCard article={article} />
+                </Grid>
               ))}
-            </Box>
-            <Box sx={{ marginTop: '16px', display: 'flex', justifyContent: prevPageCode ? 'space-between' : 'center' }}>
-              {prevPageCode && (
-                <IconButton onClick={handlePrevPage} sx={{ backgroundColor: '#393E46', color: '#fff', marginLeft: '5%' }}>
-                  <ArrowBackIcon />
-                </IconButton>
-              )}
-              {nextPageCode && (
-                <IconButton onClick={handleNextPage} sx={{ backgroundColor: '#393E46', color: '#fff', marginRight: '5%' }}>
-                  <ArrowForwardIcon />
-                </IconButton>
-              )}
+            </Grid>
+            <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+              <Pagination
+                count={nextPageToken ? page + 1 : page}
+                page={page}
+                onChange={handleChange}
+                color="primary"
+              />
             </Box>
           </>
         ) : (
-          <div>No articles found</div>
-        )
-      )}
-    </Container>
-  );  
+          <Typography>No articles found.</Typography>
+        )}
+      </Container>
+    </motion.div>
+  );
 }
+
 export default NewsDetails;

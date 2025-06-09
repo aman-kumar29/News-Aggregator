@@ -1,305 +1,166 @@
-import React, { useState } from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import TextField from '@mui/material/TextField';
-
-import { useRef } from 'react';
-
-import FitbitIcon from '@mui/icons-material/Fitbit';
-import SearchIcon from '@mui/icons-material/Search';
+import React, { useRef, useState } from "react";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  MenuItem,
+  Button,
+  Drawer,
+  TextField,
+  Tooltip,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import FitbitIcon from "@mui/icons-material/Fitbit";
+import SearchIcon from "@mui/icons-material/Search";
 
 function Header({ onSearch }) {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [searchText, setSearchText] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState(''); // State for selected category
-  const [selectedCountry, setSelectedCountry] = useState(''); // State for selected country
-  const [selectedTimeframe, setSelectedTimeframe] = useState(''); // State for selected timeframe
-  const [selectedLanguage, setSelectedLanguage] = useState(''); // State for selected language
-  const overlayRef = useRef();
-  
-  const openSearch = () => {
-    overlayRef.current.style.width = '100%';
-  };
-  
-  const closeSearch = () => {
-    overlayRef.current.style.width = '0%';
-  };
-  
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-  
-  const handleCategory = (category) => {
-    const searchOptions = {
-      category: category,
-      country: selectedCountry,
-      timeframe: selectedTimeframe,
-      language: selectedLanguage,
-    };
-  
-    onSearch('', searchOptions);
-    handleCloseNavMenu();
-    closeSearch();
-  };
-  const handleSearch = () => {
-    const searchOptions = {
-      category: selectedCategory,
-      country: selectedCountry,
-      timeframe: selectedTimeframe,
-      language: selectedLanguage,
-    };
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
-    onSearch(searchText, searchOptions);
-    closeSearch();
+  const [searchText, setSearchText] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedTimeframe, setSelectedTimeframe] = useState("");
+  const [selectedLanguage, setSelectedLanguage] = useState("");
+
+  const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
+  const handleCloseNavMenu = () => setAnchorElNav(null);
+
+  const handleCategory = (category) => {
+    onSearch("", {
+      category,
+      country: selectedCountry,
+      timeframe: selectedTimeframe,
+      language: selectedLanguage,
+    });
+    handleCloseNavMenu();
   };
+
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission
-    handleSearch(searchText, {
+    e.preventDefault();
+    onSearch(searchText, {
       category: selectedCategory,
       country: selectedCountry,
       timeframe: selectedTimeframe,
       language: selectedLanguage,
     });
+    setDrawerOpen(false);
   };
-  
 
   return (
     <>
-      <AppBar position="static" sx={{ background: 'linear-gradient(to right, #393E46, #242629)',color:'#F7F7F7' }}>
-        <Container maxWidth="xl">
-          <Toolbar disableGutters>
-            <FitbitIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, fontSize: '2rem', color: '#ffffff' }} />
-            <Typography
-              variant="h6"
-              noWrap
-              component="a"
-              href="#app-bar-with-responsive-menu"
-              sx={{
-                mr: 2,
-                display: { xs: 'none', md: 'flex' },
-                fontFamily: 'Georgia, serif',
-                fontWeight: 700,
-                letterSpacing: '.2rem',
-                color: '#ffffff',
-                textDecoration: 'none',
-                fontSize: '1.5rem',
-              }}
+      <AppBar position="sticky" elevation={2} color="primary">
+        <Toolbar>
+          {/* MOBILE HAMBURGER */}
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
+            <IconButton
+              size="large"
+              onClick={handleOpenNavMenu}
+              color="inherit"
             >
-              NewZera
-            </Typography>
-
-            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleOpenNavMenu}
-                color="inherit"
-              >
-                <MenuIcon />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={{
-                  display: { xs: 'block', md: 'none' },
-                }}
-              >
-                <MenuItem onClick={() => handleCategory('top')}>
-                  <Typography textAlign="center" color="#333333">
-                    Trending News
-                  </Typography>
-                </MenuItem>
-                <MenuItem onClick={() => handleCategory('top')}>
-                  <Typography textAlign="center" color="#333333">
-                    Top News
-                  </Typography>
-                </MenuItem>
-                <MenuItem onClick={() => handleCategory('sports')}>
-                  <Typography textAlign="center" color="#333333">
-                    Sports News
-                  </Typography>
-                </MenuItem>
-                {/* Add more menu items as needed */}
-              </Menu>
-            </Box>
-            <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, color: '#ffffff', fontSize: '1.5rem' }} />
-            <Typography
-              variant="h5"
-              noWrap
-              component="a"
-              href="#app-bar-with-responsive-menu"
-              sx={{
-                mr: 2,
-                display: { xs: 'flex', md: 'none' },
-                flexGrow: 1,
-                fontFamily: 'Georgia, serif',
-                fontWeight: 700,
-                letterSpacing: '.2rem',
-                color: '#ffffff',
-                textDecoration: 'none',
-                fontSize: '1.5rem',
-              }}
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              anchorEl={anchorElNav}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
             >
-              NewZera
-            </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              <Button
-                key="top"
-                onClick={() => handleCategory('top')}
-                sx={{ my: 2, color: '#ffffff', display: 'block', fontSize: '1rem' }}
-              >
-                Top News
-              </Button>
-              <Button
-                key="top1"
-                onClick={() => handleCategory('sports')}
-                sx={{ my: 2, color: '#ffffff', display: 'block', fontSize: '1rem' }}
-              >
-                Sports News
-              </Button>
-              <Button
-                key="sports"
-                onClick={() => handleCategory('top')}
-                sx={{ my: 2, color: '#ffffff', display: 'block', fontSize: '1rem' }}
-              >
-                Trending News
-              </Button>
-              {/* Add more buttons as needed */}
-            </Box>
+              {[
+                { label: "Top", value: "top" },
+                { label: "Sports", value: "sports" },
+              ].map((item) => (
+                <MenuItem
+                  key={item.value}
+                  onClick={() => handleCategory(item.value)}
+                >
+                  {item.label}
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
 
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open search">
-                <IconButton onClick={openSearch} sx={{ p: 0 }} size="large">
-                  <SearchIcon sx={{ fontSize: '1.8rem', color: '#ffffff' }} />
-                </IconButton>
-              </Tooltip>
+          {/* LOGO */}
+          <FitbitIcon sx={{ mr: 1 }} />
+          <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 700 }}>
+            NewZera
+          </Typography>
 
-            </Box>
-          </Toolbar>
-        </Container>
+          {/* DESKTOP MENU */}
+          <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2, mr: 2 }}>
+            <Button color="inherit" onClick={() => handleCategory("top")}>
+              Top
+            </Button>
+            <Button color="inherit" onClick={() => handleCategory("sports")}>
+              Sports
+            </Button>
+          </Box>
+
+          {/* SEARCH BUTTON */}
+          <Tooltip title="Search">
+            <IconButton color="inherit" onClick={() => setDrawerOpen(true)}>
+              <SearchIcon />
+            </IconButton>
+          </Tooltip>
+        </Toolbar>
       </AppBar>
-      <div ref={overlayRef} className="overlay">
-        <button className="close-button" onClick={closeSearch}>
-          &times;
-        </button>
-        <div className="overlay-content">
+
+      {/* SLIDE‑DOWN SEARCH PANEL */}
+      <Drawer
+        anchor="top"
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        PaperProps={{ sx: { p: 3, backgroundColor: "background.default" } }}
+      >
         <form onSubmit={handleSubmit}>
-          <Box>
-            {/* Existing TextField and Button components */}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 2,
+              flexWrap: "wrap",
+            }}
+          >
             <TextField
-              InputProps={{ sx: { borderRadius: 20 } }}
-              sx={{ width: '40%', marginLeft: '5%', '@media (max-width: 1200px)': { width: '50%', marginLeft: '25%' }, '@media (max-width: 768px)': { width: '70%', marginLeft: '15%' }, marginRight: '1%' }}
-              type="text"
-              placeholder="Enter your search keyword..."
+              fullWidth
+              size="small"
+              label="Keyword…"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
             />
-            <Button
-              type ="submit"
-              onClick={handleSearch}
-              sx={{
-                padding: '12px 25px',
-                borderRadius: '30px 30px 30px 30px',
-                transition: '0.3s',
-                background: '#393E46',
-                color: '#F7F7F7',
-                '&:hover': {
-                  backgroundColor: '#0056b3',
-                },
-              }}
-              variant="contained"
-            >
-              Search
-            </Button>
-          </Box>
-          <Box>
-          <TextField
-              InputProps={{ sx: { borderRadius: 20 } }}
+            <TextField
               select
+              size="small"
               label="Category"
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              sx={{ marginLeft: '1%', width: '8%' }}
+              sx={{ minWidth: 120 }}
             >
               <MenuItem value="">None</MenuItem>
               <MenuItem value="top">Top</MenuItem>
               <MenuItem value="sports">Sports</MenuItem>
-              {/* Add more categories as needed */}
             </TextField>
-
             <TextField
-              InputProps={{ sx: { borderRadius: 20 } }}
               select
+              size="small"
               label="Country"
               value={selectedCountry}
               onChange={(e) => setSelectedCountry(e.target.value)}
-              sx={{ marginLeft: '1%', width: '8%' }}
+              sx={{ minWidth: 120 }}
             >
-              <MenuItem value="">None</MenuItem>
+              <MenuItem value="">All</MenuItem>
               <MenuItem value="in">India</MenuItem>
-              <MenuItem value="us">United States</MenuItem>
-              <MenuItem value="gb">United Kingdom</MenuItem>
-              <MenuItem value="ca">Canada</MenuItem>
+              <MenuItem value="us">USA</MenuItem>
+              <MenuItem value="gb">UK</MenuItem>
             </TextField>
-
-            <TextField
-              InputProps={{ sx: { borderRadius: 20 } }}
-              select
-              label="Timeframe"
-              value={selectedTimeframe}
-              onChange={(e) => setSelectedTimeframe(e.target.value)}
-              sx={{ marginLeft: '1%', width: '8%' }}
-            >
-              <MenuItem value="">None</MenuItem>
-              <MenuItem value="1">1 Hour</MenuItem>
-              <MenuItem value="6">6 Hours</MenuItem>
-              <MenuItem value="24">24 Hours</MenuItem>
-            </TextField>
-
-            <TextField
-              InputProps={{ sx: { borderRadius: 20 } }}
-              select
-              label="Language"
-              value={selectedLanguage}
-              onChange={(e) => setSelectedLanguage(e.target.value)}
-              sx={{ marginLeft: '1%', width: '8%' }}
-            >
-              <MenuItem value="">None</MenuItem>
-              <MenuItem value="en">English</MenuItem>
-              <MenuItem value="hi">Hindi</MenuItem>
-              <MenuItem value="jp">Japanese</MenuItem>
-            </TextField>
+            <Button type="submit" variant="contained" sx={{ px: 4 }}>
+              Go
+            </Button>
           </Box>
         </form>
-        </div>
-      </div>
+      </Drawer>
     </>
   );
 }

@@ -1,13 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './components/App';
-import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+// The <Router> is defined inside App.jsx (see theme + routes there)
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-<BrowserRouter>
+  <React.StrictMode>
     <App />
-</BrowserRouter>
+  </React.StrictMode>
 );
-
